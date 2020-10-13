@@ -1,1 +1,7 @@
-site_name: My Docs
+site_name: COMP6203 Intelligent Agents 中文学习指南
+
+nav:
+    - Home: index.md
+    - About: about.md
+
+theme: readthedocs
