@@ -1,5 +1,6 @@
 
 .DS_Store
+.idea *
 .idea/codeStyles/codeStyleConfig.xml
 .idea/modules.xml
 .idea/vcs.xml
