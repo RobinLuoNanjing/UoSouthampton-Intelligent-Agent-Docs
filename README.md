@@ -24,7 +24,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="img/introduction/agentSoton.jpg">
+    src="docs/img/introduction/agentSoton.jpg">
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -52,7 +52,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="img/introduction/AIC.jpg">
+    src="docs/img/introduction/AIC.jpg">
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -68,7 +68,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="img/introduction/anac2018.png">
+    src="docs/img/introduction/anac2018.png">
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -80,7 +80,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="img/introduction/anac2019.png">
+    src="docs/img/introduction/anac2019.png">
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
