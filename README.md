@@ -63,7 +63,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 
 
 
-###学生荣耀
+### 学生荣耀
 每一届，Enrico都会推荐学生踊跃报名参加ANAC比赛，就是专门搞Agent竞赛的比赛。一般挂靠在IJCAI这个顶会下面举办的。也就是说，如果你的Agent获奖了，你可以去参加IJCAI唉，而且还是学校报销机票。南安已经有两届拿奖了。
 <center>
     <img style="border-radius: 0.3125em;
