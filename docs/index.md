@@ -4,6 +4,7 @@ Hello, Southampton大学的AI同学你们好哈😊。无论如何，你们都�
 那么，这也是我写这个docs的目的，我想让更多学生能够接触这门课程，而不是全程划水，竞赛看命。想要把前任学长学姐的经验传给下一代，把积累的经验一代代传下去。
 
 总的来说，这个文档会教会你什么？（以下内容只是一个草稿哈）
+
 * 了解COMP6203 Coursework到底是在干什么
 * 理解Genius Core这个平台是如何使用的
 * 如何写一个自己的Agent
@@ -13,9 +14,21 @@ Hello, Southampton大学的AI同学你们好哈😊。无论如何，你们都�
 以上的内容，都是基于我自己的经历写的。同时，我也会邀请到18届的学长，参与并撰写整个docs。
 
 ## Introduction
+南安普顿大学的AI系下的 Multigent System方向，实力非常🐂🍺。虽然这个方向不是现在主流的AI落地方向，但是在学术界Agent领域，你说你是南安普顿的，大家肯定都知道。接下来我会介绍一下咱南安的Agent有多厉害。想要以此激发你们学习的兴趣呀。
 
 ### Honor of Agent
+首先
 
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="img/introduction/agentSoton.jpg">
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">AceRank上，南安排名前几的教授大部分都是搞Agent的 </div>
+</center>
 
 <center>
     <img style="border-radius: 0.3125em;
@@ -39,6 +52,8 @@ Hello, Southampton大学的AI同学你们好哈😊。无论如何，你们都�
     color: #999;
     padding: 2px;">2019年 ANAC in Macau 第一名 (正在力求右边的你们的学长跟我一起写这个docs) </div>
 </center>
+
+
 
 
 
