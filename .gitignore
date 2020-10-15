@@ -1,10 +1,10 @@
 
 .DS_Store
-*.idea
+.idea/*
 .idea/codeStyles/codeStyleConfig.xml
 .idea/modules.xml
 .idea/vcs.xml
 .idea/UoSouthampton-Intelligent-Agent-Docs.iml
 .idea/workspace.xml
 
-*.site
+.site/*
