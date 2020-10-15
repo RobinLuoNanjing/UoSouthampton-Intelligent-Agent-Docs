@@ -107,10 +107,10 @@ Aloha,😊。该学习指南的作者现在只有两个人哈。也欢迎那些�
  
  <p>
   <a href="https://github.com/RobinLuoNanjing">
-    <img src="img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
+    <img src="docs/img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
   </a>
    <a href="https://www.linkedin.com/in/mingmingluo/">
-      <img src="img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
+      <img src="docs/img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
    </a>
  </p>
 </span>
