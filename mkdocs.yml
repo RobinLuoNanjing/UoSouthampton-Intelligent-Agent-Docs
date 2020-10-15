@@ -3,5 +3,6 @@ site_name: COMP6203 Intelligent Agents 中文学习指南
 nav:
     - Home: index.md
     - Quick Start: start.md
+    - Basic Concept: basic.md
 
 theme: readthedocs

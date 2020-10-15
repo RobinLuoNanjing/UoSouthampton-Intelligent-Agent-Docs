@@ -41,7 +41,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 
 [0,3]那个老师是[Enrico Gerding](http://www.southampton.ac.uk/~eg/#_ga=2.127909581.13544906.1602674669-357846429.1552973807)，是你们Intelligent Agent的老师。也是我的毕设导师，人非常nice。Agent领域算是比较厉害的哈。产出也还行，最近几年，3篇AAMAS，1篇JAIR，其他的论文可能不是AI领域的，我也不认识，反正我看他挺喜欢搞金融的。19届有个你们的学长，读Norman底下的博士，二导就是他，如果有机会，也可以带你们认识一下你们的学长。
 
-[1,1] 是大老板[Tim Norman](https://www.ecs.soton.ac.uk/people/tjn1f15#_ga=2.258324554.13544906.1602674669-357846429.1552973807), 他也有可能参与到这门课的教学当中来，比如上学期，他就叫我们去中心化的内容。
+[1,1] 是大老板[Tim Norman](https://www.ecs.soton.ac.uk/people/tjn1f15#_ga=2.258324554.13544906.1602674669-357846429.1552973807), 他也有可能参与到这门课的教学当中来，比如上学期，他就教我们去中心化的内容。
 
 [2,2] 是[Richard Watson](https://cmg.soton.ac.uk/people/raw1/),是你们Foundation of AI 的老师。看样貌平平无奇，上课的内容看似索然无味，没有用处。但是他给分松，而且考试难度低。是真的好哈。他的研究方向还是比较偏进化算法相关的。
 
@@ -61,7 +61,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 
 
 
-###学生荣耀
+### 学生荣耀
 每一届，Enrico都会推荐学生踊跃报名参加ANAC比赛，就是专门搞Agent竞赛的比赛。一般挂靠在IJCAI这个顶会下面举办的。也就是说，如果你的Agent获奖了，你可以去参加IJCAI唉，而且还是学校报销机票。南安已经有两届拿奖了。
 <center>
     <img style="border-radius: 0.3125em;
@@ -100,7 +100,7 @@ Aloha,😊。该学习指南的作者现在只有两个人哈。也欢迎那些�
 <span style="float: left;width: 50%">
  <h3 style="font-family: 'Apple Braille'">Robin Luo</h3>
  
- <p stpyle="color: #666666;font-family: 'Apple LiSung'">2019 AI master at the Uni of Southampton
+ <p stpyle="color: #666666;font-family: 'Apple LiSung'">2019 AI MSc at the Uni of Southampton
  </p>
  
  <p>
@@ -122,7 +122,7 @@ Aloha,😊。该学习指南的作者现在只有两个人哈。也欢迎那些�
 <span style="float: left;width: 50%">
  <h3 style="font-family: 'Apple Braille'">Peihao</h3>
  
- <p stpyle="color: #666666;font-family: 'Apple LiSung'">2018 AI master at the Uni of Southampton
+ <p stpyle="color: #666666;font-family: 'Apple LiSung'">2018 AI MSc at the Uni of Southampton
  </p>
  
  <p>
