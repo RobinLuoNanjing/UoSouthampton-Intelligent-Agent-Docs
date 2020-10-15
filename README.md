@@ -63,7 +63,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 
 
 
-### 学生荣耀
+###学生荣耀
 每一届，Enrico都会推荐学生踊跃报名参加ANAC比赛，就是专门搞Agent竞赛的比赛。一般挂靠在IJCAI这个顶会下面举办的。也就是说，如果你的Agent获奖了，你可以去参加IJCAI唉，而且还是学校报销机票。南安已经有两届拿奖了。
 <center>
     <img style="border-radius: 0.3125em;
@@ -89,6 +89,58 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 </center>
 
 可惜受疫情影响，原本2020 ANAC是在日本京都举办的，也被取消了。并且，举办方已经将我们使用的Genius Core这个客户端版本，换成了GeniusWeb版本。两个版本代码不兼容的，所以很难实现。我问了Enrico今年上课会用哪个版本，他说还是会用旧的客户端，因为功能比较完善。
+
+
+## About us
+Aloha,😊。该学习指南的作者现在只有两个人哈。也欢迎那些愿意将自己当初做的agent的经历经验分享给下一届的同学们哈。如果你对这份学习指南比较满意，希望可以star或者follow我们。这会是我们继续完善这份指南的动力。当然，也很乐意通过这样的方式认识大家。毕竟互联网圈人脉广阔，以后跳槽也方便哈。
+
+<div style="height: 200px;">
+<span style="width: 30%;height:30%;float:left">  
+    <img src="https://avatars1.githubusercontent.com/u/28834567?s=400&u=2e522f94f4e0ad980cececa0593be0f0e2c2dcb2&v=4" alt="Robin" width="80%" style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);">
+</span>
+
+<span style="float: left;width: 50%">
+ <h3 style="font-family: 'Apple Braille'">Robin Luo</h3>
+ 
+ <p stpyle="color: #666666;font-family: 'Apple LiSung'">2019 AI master at the Uni of Southampton
+ </p>
+ 
+ <p>
+  <a href="https://github.com/RobinLuoNanjing">
+    <img src="img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
+  </a>
+   <a href="https://www.linkedin.com/in/mingmingluo/">
+      <img src="img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
+   </a>
+ </p>
+</span>
+</div>
+
+<div style="height: 200px">
+<span style="width: 30%;height:30%;float:left">  
+    <img src="https://avatars3.githubusercontent.com/u/20392429?s=400&u=a6a630ee43e19efe5234fff256e31aec8c922bd1&v=4" alt="Peihao" width="80%" style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);">
+</span>
+
+<span style="float: left;width: 50%">
+ <h3 style="font-family: 'Apple Braille'">Peihao</h3>
+ 
+ <p stpyle="color: #666666;font-family: 'Apple LiSung'">2018 AI master at the Uni of Southampton
+ </p>
+ 
+ <p>
+  <a href="https://github.com/renph">
+    <img src="docs/img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
+  </a>
+   <a href="https://www.linkedin.com/in/peihao-ren/">
+      <img src="docs/img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
+   </a>
+ </p>
+</span>
+</div>
+
+
+
+
 
 
 
