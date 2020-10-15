@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - Quick Start: start.md
     - Basic Concept: basic.md
+    - Agent Example: agent.md
 
 theme: readthedocs
 
