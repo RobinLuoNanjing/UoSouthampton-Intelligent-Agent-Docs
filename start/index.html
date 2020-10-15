@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>About - COMP6203 Intelligent Agents 中文学习指南</title>
+  <title>Quick Start - COMP6203 Intelligent Agents 中文学习指南</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "About";
-    var mkdocs_page_input_path = "about.md";
+    var mkdocs_page_name = "Quick Start";
+    var mkdocs_page_input_path = "start.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -52,8 +52,14 @@
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">About</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Quick Start</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#java">配置Java环境</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#genius_1">下载Genius</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#genius_2">运行Genius</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -78,7 +84,7 @@
     
       
     
-    <li>About</li>
+    <li>Quick Start</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -89,7 +95,31 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="_1">关于作者</h1>
+                <h1 id="genius">安装和配置Genius</h1>
+<p>默认你们很多人之前没有java基础，所以这里会写的比较详细一点。希望科班出身的童鞋能够照顾一下身边没有java基础的童鞋哈🧐。</p>
+<p>另外，下面的内容可能与你们🖥Lab1 Task2: A first look at Genius 有重叠之处，如果你们的Genius环境已经配置好了，就可以跳过这一段啦。</p>
+<h2 id="java">配置Java环境</h2>
+<p>首先我们要安装配置Genius的开发环境，即JDK 8(Java Development Kit)，大家版本不要弄错啦。这里没有基础的童鞋们需要注意下JDK和JRE(Java Runtime Enviroment)的关系。JRE是一个运行环境，能让你跑JAVA程序，但是你不能开发它。但是JDK是一个工具包，你可以用这个工具包去开发JAVA程序。所以我们要安装的是JDK，并且你装了JDK就默认自带了JRE。</p>
+<p>这里有一份比较全的<a href="https://www.runoob.com/java/java-environment-setup.html">安装和配置Java环境的教程</a>，虽然是Windows版本的。Mac配置Java环境可以自己搜索哈。</p>
+<h2 id="genius_1">下载Genius</h2>
+<p><font color="#dd0000">注意🤒：</font> 截止到目前，我看了一下你们Lab1的中下载Genius的内容，发现它还是让学生自行在代尔夫特理工大学的网站上下载最新版本的Genius。但是需要注意的是，TUDelft官网上的最新版本是Genius9.1.11。然而在后面的Lab4中，老师会让你们用最新版本，也就是Genius9.1.12。到那时候又要重新装一遍。而且，还得删掉旧版本，不然新版本会出不来，也会报错。所以我的建议是直接下载新版本9.1.12版本。</p>
+<p>Genius9.1.12版本地址为：<a href="https://secure.ecs.soton.ac.uk/notes/comp6203/genius/genius-9.1.12.jar">Genius9.1.12</a>。</p>
+<h2 id="genius_2">运行Genius</h2>
+<p>双击jar包，就可以运行Genius啦(如果双击无法打开, Mac系统可能会出现这种情况，你可以打开终端，输入: java -jar genius-9.1.x12.jar )。
+<img alt="" src="../img/start/genius.jpg" />{:height="50%" width="50%"}</p>
+<div>
+<img src="img/start/genius.jpg" alt="genius">
+<img style="border-radius: 0.3125em;
+box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+src="img/start/genius.jpg">
+<br>
+<div style="color:orange; border-bottom: 1px solid #d9d9d9;
+display: inline-block;
+color: #999;
+padding: 2px;">Genius Platform </div>
+</div>
+
+<p>至此，你已经</p>
               
             </div>
           </div>
