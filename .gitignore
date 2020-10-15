@@ -6,3 +6,5 @@
 .idea/vcs.xml
 .idea/UoSouthampton-Intelligent-Agent-Docs.iml
 .idea/workspace.xml
+
+.site *
