@@ -1,5 +1,9 @@
 Docs文档可以在这里看到 [点击这里](https://robinluonanjing.github.io/UoSouthampton-Intelligent-Agent-Docs/)
 
+如果你想和我一起编写这份指南的话，可以安装requirement.txt下的环境就可以啦。
+`pip install -r requirements.txt`
+
+
 # Welcome to Intelligent Agent world
 Hello, Southampton大学的AI同学你们好哈😊。我知道你们都要学习Intelligent Agent这门必修课的(🤦‍♂️可能有些cs系的学生也选了这门课哈，希望你们能退则退吧)。
 
