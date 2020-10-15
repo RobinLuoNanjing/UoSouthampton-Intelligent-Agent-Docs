@@ -58,7 +58,17 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Basic Concept</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#domain-issues-values">Domain, Issues 和 Values</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#preference-profiles">Preference Profiles</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utility">Utility</a>
+    </li>
     </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../agent/">Agent Example</a>
                     </li>
                 </ul>
       </div>
@@ -93,8 +103,9 @@
           <div role="main">
             <div class="section">
               
-                <p>这一章节，我会带大家过一下Lab1和Lab2涉及到的基础知识点与概念。这些重要的概念对你以后如何编写自己的Agent极为重要。如果不能理解这些概念，会对你之后使用Genius的API造成很大的困扰。不过放心，我会用较为精简的话语带你们慢慢认识这些概念。当然，如果有说错的地方，也欢迎你们fork我的docs，帮我修改，然后push哈。</p>
-<h1 id="domain-issues-values">Domain, Issues 和 Values</h1>
+                <h1 id="_1">基础概念解析</h1>
+<p>这一章节，我会带大家过一下Lab1和Lab2涉及到的基础知识点与概念。这些重要的概念对你以后如何编写自己的Agent极为重要。如果不能理解这些概念，会对你之后使用Genius的API造成很大的困扰。不过放心，我会用较为精简的话语带你们慢慢认识这些概念。当然，如果有说错的地方，也欢迎你们fork我的docs，帮我修改，然后push哈。</p>
+<h2 id="domain-issues-values">Domain, Issues 和 Values</h2>
 <p>Lab1中用了一个这样的场景来描述Domain(域), Issues(可以翻译为议题)和Values(值)之间的关系:</p>
 <p>Agent A作为买家(buyer)要和卖家Agent B(seller)进行笔记本价格上的谈判(Negotiation)。</p>
 <p>笔记本的属性包括价格(Price💰),硬盘大小(Hard Disk💿)以及显示器(Monitor🖥)的大小。(如下图所示)
@@ -102,8 +113,7 @@
 <p>那么:</p>
 <p>Domain可以被理解为一个问题的场景(比如笔记本谈判这个场景，或者你也可以当成是一个剧本杀的剧本📚)，这个场景下有很多Issues需要Agent之间进行议论(比如议论价格多少，硬盘多大，显示器多大)，每个Issue具体取多少值，那就是Value啦。</p>
 <p>用这样的角度去理解Lab1里的那些公式，应该会简单一点😊。</p>
-<h1 id="preference-profiles-and-utilities">Preference Profiles and Utilities</h1>
-<h1 id="preference-profiles">Preference Profiles</h1>
+<h2 id="preference-profiles">Preference Profiles</h2>
 <p>A 和 B 在笔记本交易这个Domain下，对Price, Hard Disk以及Monitor进行博弈。可以想象你眼前A和B轮流说出自己的报价(Offer)，比如：</p>
 <p>A说我报一个offer{Price:£1200, HardDisk:1 TB, Moniotor:17寸}，你就说你卖不卖吧。</p>
 <p>B说我不卖，我报一个offer{Price:£1500, HardDisk: 256 GB, Monitor:15寸}，你就说你买不买吧。</p>
@@ -120,7 +130,7 @@
 <img alt="evalA" src="../img/basic/evalA.jpg" />
 需要注意的一点是，不同issue下的evaluation是不能比较的。打个比方，Price(£1200)的50分和Hard disk(1TB)的10分是不能比较的。</p>
 <p><br></p>
-<p>在认识过evaluation的含义之后，我们来理解一下公式的意思。先assume(假设)一个offer为{Price:£1500, HardDisk: 256 GB, Monitor:15寸}(🐶很明显，这个是对seller B非常有利的offer，对buyer A非常不利。可以提前猜出，这个offer对B的效用肯定高于对A的效用，我们待会计算一下看看对不对)。</p>
+<p>在认识过evaluation的含义之后，我们来理解一下公式的意思。先assume(假设)一个offer为{Price:£1400, HardDisk: 256 GB, Monitor:15寸}(🐶很明显，这个是对seller B非常有利的offer，对buyer A非常不利。可以提前猜出，这个offer对B的效用肯定高于对A的效用，我们待会计算一下看看对不对)。</p>
 <ul>
 <li>
 <p><span class="arithmatex">\(U_{j}(o)\)</span> : offer o 对Agent <span class="arithmatex">\(j\)</span> 的效用 </p>
@@ -132,15 +142,22 @@
 <p><span class="arithmatex">\(w_{j}^{i}\)</span> : Agent <span class="arithmatex">\(j\)</span> 对不同Issues的偏好的权重(weight)。比方说，Agent A可能更喜欢在Price占点便宜，而不怎么在乎Monitor的大小。所以他会分给Price更多的权重。</p>
 </li>
 <li>
-<p><span class="arithmatex">\(\frac{\text { eval }_{j}\left(o_{i}\right)}{\max \left(\text {eval}_{j}\left(I_{i}\right)\right)}\)</span> :</p>
+<p><span class="arithmatex">\(\frac{\text { eval }_{j}\left(o_{i}\right)}{\max \left(\text {eval}_{j}\left(I_{i}\right)\right)}\)</span> : 有点复杂。举个例子，就拿{Price:£1400, HardDisk: 256 GB, Monitor:15寸}例子来看，A在Price这个issue下的效用为 <span class="arithmatex">\(0.3*(0/100)=0\)</span>。没错，这个offer在价格方面，给A的utility是0。因为A不想用最贵的价格买它。</p>
 </li>
 </ul>
+<p>那么offer {Price:£1400, HardDisk: 256 GB, Monitor:15寸} 对A的总效用是多少呢？看以下计算：
+<span class="arithmatex">\(U=0.3*(0/100)+0.4*(0/10)+0.3*(0/1)=0\)</span>。可以说这个offer对A来说，是他最不想要的。</p>
+<p>那么对B呢？B的Preference Profile如下图。那么<span class="arithmatex">\(U=0.6*(100/100)+0.3*(3/3)+0.1*(1/1)=1\)</span>,utility为1。这说明这个offer是B最想要的。同时你也应该明白，utility的范围是[0,1]。你可以通过实验中的table 3去计算其他offer对A和B不同的utility来加深理解噢。
+<img alt="evalB" src="../img/basic/evalB.jpg" /></p>
+<p>😎读到这，你是不是能稍微明白点agent的意思了？稍稍提前透露下，之后的Agent大作业实际上可以理解为两边互相出offer。一方面你需要计算自己的preference(因为你不知道自己的preference是多少，所以你需要算法算出来)，这样你报offer才能往自己偏好的方向出，另一方面你也不知道对手的preference，你也得通过对手每轮报价的offer去计算出对手的报价模型。最理想的情况就是你出的offer是自己喜欢的，对手不喜欢的。最差的情况就是你没猜中自己和对手的模型，报价一个自己最讨厌，但对手喜欢的。那么对手就会同意报价，此时你的utility会明显低于对手，那么你在一定程度上就输了🙀。</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../agent/" class="btn btn-neutral float-right" title="Agent Example">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../start/" class="btn btn-neutral" title="Quick Start"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -171,6 +188,8 @@
       
         <span><a href="../start/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../agent/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
