@@ -13,7 +13,7 @@ Hello, Southampton大学的AI同学你们好哈😊。你们都要学习Intellig
 
 以上的内容，都是基于我自己的经历写的。同时，我也会邀请到18届的学长，参与并撰写整个docs👊。
 
-如果这个教程对你的学习起到帮助的话，请在github中star⭐️哈。妈妈说过，敢于star的人都是好孩子，都不会挂科噢💁‍♀️。
+如果这个教程对你的学习起到帮助的话，请在github中star⭐️️[这个项目](https://github.com/RobinLuoNanjing/UoSouthampton-Intelligent-Agent-Docs)。妈妈说过，敢于star的人都是好孩子，都不会挂科噢💁‍♀️。
 
 ## Introduction
 南安普顿大学的AI系下的 Multigent System方向，实力非常🐂🍺。虽然这个方向不是现在主流的AI落地方向，但是在学术界Agent领域，你说你是南安普顿的，大家肯定都知道。接下来我会介绍一下咱南安的Agent有多厉害。想要以此激发你们学习的兴趣呀。🙌🏻
