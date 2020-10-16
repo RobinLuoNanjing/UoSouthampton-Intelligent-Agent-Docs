@@ -30,6 +30,64 @@ lab2 里提到了一个discount factor $\delta$ (打折因子)💰。什么意�
 ## 运行你的Agent
 在进行这一部分之前，得确定你已经完成了Quick Start章节的环境的安装并且已经成功的把[这个视频](https://www.youtube.com/watch?v=ES_bpdRiSNM)里的操作完成哈😊。
 
-### 创建一个Agent
+### 创建一个Agent 
+(下面的操作都是在你们的lab2中)
 1. 首先创建一个新的package,命名为groupn,其中n是你们组完队之后老师用邮箱发给你们的组号。
-2. 
+2. 从文件夹 bilateralexamples 复制文件 RandomBidderExample.java 进入你们的package。
+3. RandomBidderExample.java 文件，将其包名(第一行)改为你们之前的定义的报名，比如group10。
+4. 把class改名为 Myagent。
+5. (Optional) 在getDescription()函数中，改变对你agent的描述。(虽然这步没什么用，纯属好玩)
+
+完成上面5步，至此，你已经有了自己的agent😝！只不过他只是一个example复制来的，就是一个没有复杂算法的工具人🤖。之所以要复制而来，那是因为，你的agent里的代码都需要保持类似的结构，从而才能在Genius里运行。
+
+### 可选步骤
+Lab2 第2部分说的是，告诉你每次都要编译一下自己的java文件(右键 click compile groupn.java)，这样才能运行。 第3部分其实是可选的，就是给你添加了每个API方法的英文文档在编译器中。
+
+## 理解你的Agent有哪些属性和方法
+从现在开始的每一章节，每个实验都会开始介绍Genius的一些特性与方法💆‍♂️。这是比较重要的内容，因为你们的算法创新其实都是建立于Genius提供的API之上的哈。
+
+### UtilitySpace
+首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包，你把鼠标悬浮在报错的地方，导入就可以啦😬。
+```java
+AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
+AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
+
+List< Issue > issues = additiveUtilitySpace.getDomain().getIssues();
+
+for (Issue issue : issues) {
+    int issueNumber = issue.getNumber();
+    System.out.println(">> " + issue.getName() + " weight: " + additiveUtilitySpace.getWeight(issueNumber));
+
+    // Assuming that issues are discrete only
+    IssueDiscrete issueDiscrete = (IssueDiscrete) issue;
+    EvaluatorDiscrete evaluatorDiscrete = (EvaluatorDiscrete) additiveUtilitySpace.getEvaluator(issueNumber);
+
+    for (ValueDiscrete valueDiscrete : issueDiscrete.getValues()) {
+        System.out.println(valueDiscrete.getValue());
+        System.out.println("Evaluation(getValue): " + evaluatorDiscrete.getValue(valueDiscrete));
+        try {
+            System.out.println("Evaluation(getEvaluation): " + evaluatorDiscrete.getEvaluation(valueDiscrete));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+
+
+1.  ```init()```
+这是你的Agent的初始化函数，可以把它当做是整个Agent的入口🚪。也就是说，比赛的刚开始，你需要把所有的状态准备好，最主要的是预测自己的模型。这么说有点抽象，那我打个比方吧，就想运动员准备比赛一样，比赛前需要补能量，热身啥的，咱们的agent也需要时间去做准备。也就是在1分钟左右的时间内，去计算自己的模型。然后才进行Negotiation。在这里，咱们先别管如何预测自己的模型。只需要知道init的作用就好啦。
+
+2.  ```super.init(info)```
+这个是继承父类的初始化方法。封装，继承和多态，是面向对象的三个基本特性。没有面向对象语言基础(c++,java,python)的童鞋，可以补一补相关的内容。当然，你也可以不去理解这个代码的意思🙅‍♀️，不影响你后面的设计。
+
+3. 下面的代码的意思为首先要通过```info.getUtilitySpace()```获得一个类型为``` AbstractUtilitySpace``` 的 ```utilitySpace ```。这个```utilitySpace ```就是你个人的preference profile,然后你需要将它转为```AdditiveUtilitySpace```,因为我们只考虑这个情况。🙋‍♂️有人肯定会问，不是不知道自己的preference嘛，不是要自己计算的嘛。对，这个实验只是帮你了解这些用法，所以才用这个方法。真实比赛的时候，是获取不到自己真实的```utilitySpace ```。
+```java 
+AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
+AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
+```
+
+
+
+### Concession Strategy
