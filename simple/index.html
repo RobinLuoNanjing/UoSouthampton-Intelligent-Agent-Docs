@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Agent Example - COMP6203 Intelligent Agents 中文学习指南</title>
+  <title>Simple Agent (Lab2) - COMP6203 Intelligent Agents 中文学习指南</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Agent Example";
-    var mkdocs_page_input_path = "agent.md";
+    var mkdocs_page_name = "Simple Agent (Lab2)";
+    var mkdocs_page_input_path = "simple.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -60,7 +60,19 @@
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Agent Example</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Simple Agent (Lab2)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">理论名词解释</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#saop-stacked-alternating-offers-protocol">SAOP: Stacked Alternating Offers Protocol</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reservation-value">Reservation Value</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#time-pressure">Time Pressure</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -84,7 +96,7 @@
     
       
     
-    <li>Agent Example</li>
+    <li>Simple Agent (Lab2)</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -95,7 +107,25 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="agent">一个简单的Agent</h1>
+<h2 id="_1">理论名词解释</h2>
+<h3 id="saop-stacked-alternating-offers-protocol">SAOP: Stacked Alternating Offers Protocol</h3>
+<p>所谓堆叠式交替报价协议(SAOP,这个谷歌翻译真是绝了😐 )，我们可以理解为一个negotiation协议，它是双方(Bilateral)交替报价，如果你报出当前的offer，那好，对方可以做出三个反应来应对你的offer：</p>
+<ol>
+<li>对方也出一个offer👊 ，看你同意不同意。(这意味着对方不同意你的offer，所以提出了一个新的，堆叠覆盖了你的offer)。</li>
+<li>对方同意你的offer🤝 。皆大欢喜。</li>
+<li>对方选择离开，不跟你进行交易😭 。这种情况基本上很少考虑，因为对方的目的就是最大化utility，如果对方就这么一走了之，那么utility就为0。</li>
+</ol>
+<p>其实你们上课会提到其他的protocal。但是coursework就是只有SAOP协议的形式。</p>
+<h3 id="reservation-value">Reservation Value</h3>
+<p>Reservation Value(保留值)，可以理解为你的底线，utility如果低于这个值，你就直接拒绝交易了。这就有点像妈妈👩‍🦳在菜市场买一个市场价为20块的鱼🐟，砍价到1块钱，渔贩子的reservation value是2块，所以他干脆就不卖给妈妈了。</p>
+<p>需要注意的是，有时候比赛会设定这样的规则，如果双方都没达成交易，那双方各分0.5 utility。这时候，你可以设定一个reservation value=0.5,如果对面报价低于0.5，那你索性跟他死磕到底，反正最后最低也能拿到0.5 utility。</p>
+<p>但是如果比赛规则为，双方没达成交易，两边都得0分，那reservation value还是设低点吧，有总比没有好🤦‍♀️
+。</p>
+<h3 id="time-pressure">Time Pressure</h3>
+<p>Time pressure描述的是一种情境，意味你的出价策略会随着seconds或者rounds流逝而发生改变。比如你会不断自己的offer的utility来尽快达成协议。</p>
+<p>lab2 里提到了一个discount factor <span class="arithmatex">\(\delta\)</span> (打折因子)💰。什么意思呢？就是有些时候的negotiation会加入discount factor,你的offer的 utility会随着时间的流逝，而大打折扣。这会促进双方都快点达成协议，而不是死耗着。</p>
+<p>当然，coursework应该不需要考虑这种情况。</p>
               
             </div>
           </div>
