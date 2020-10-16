@@ -9,16 +9,14 @@
 这里有一份比较全的[安装和配置Java环境的教程](https://www.runoob.com/java/java-environment-setup.html)，虽然是Windows版本的。Mac配置Java环境可以自己搜索哈。
 
 ## 下载Genius
-<font color="#dd0000">注意🤒：</font> 截止到目前，我看了一下你们Lab1的中下载Genius的内容，发现它还是让学生自行在代尔夫特理工大学的网站上下载最新版本的Genius。但是需要注意的是，TUDelft官网上的最新版本是Genius9.1.11。然而在后面的Lab4中，老师会让你们用最新版本，也就是Genius9.1.12。到那时候又要重新装一遍。而且，还得删掉旧版本，不然新版本会出不来，也会报错。所以我的建议是直接下载新版本9.1.12版本。
+<!--<font color="#dd0000">注意🤒：</font> 截止到目前，我看了一下你们Lab1的中下载Genius的内容，发现它还是让学生自行在代尔夫特理工大学的网站上下载最新版本的Genius。但是需要注意的是，TUDelft官网上的最新版本是Genius9.1.11。然而在后面的Lab4中，老师会让你们用最新版本，也就是Genius9.1.12。到那时候又要重新装一遍。而且，还得删掉旧版本，不然新版本会出不来，也会报错。所以我的建议是直接下载新版本9.1.12版本。-->
 
-Genius9.1.12版本地址为：[Genius9.1.12](https://secure.ecs.soton.ac.uk/notes/comp6203/genius/genius-9.1.12.jar)。
+<!--Genius9.1.12版本地址为：[Genius9.1.12](https://secure.ecs.soton.ac.uk/notes/comp6203/genius/genius-9.1.12.jar)。-->
+下载的地址是[下载](http://ii.tudelft.nl/genius/?q=article/releases)
 
 ## 运行Genius
-双击jar包，就可以运行Genius啦(如果双击无法打开, Mac系统可能会出现这种情况，你可以打开终端，输入: java -jar genius-9.1.12.jar )。
+双击jar包，就可以运行Genius啦(如果双击无法打开, Mac系统可能会出现这种情况，你可以打开终端，输入: java -jar genius-9.1.11.jar )。
 ![Genius](img/start/genius.jpg)
-
-
-至此，你已经可以运行Genius啦(虽然图上显示的是9.1.11版本，但是实际上是9.1.12版本)。
 
 需要注意的是。此时你只是能运行Genius，可以用上面的Agent进行比赛。但是你无法去编辑或者说是生成一个具备自己设计策略的Agent。这时候你就需要在在编辑器上运行Genius啦。
 

@@ -26,3 +26,10 @@ Time pressure描述的是一种情境，意味你的出价策略会随着seconds
 lab2 里提到了一个discount factor $\delta$ (打折因子)💰。什么意思呢？就是有些时候的negotiation会加入discount factor,你的offer的 utility会随着时间的流逝，而大打折扣。这会促进双方都快点达成协议，而不是死耗着。
 
 当然，coursework应该不需要考虑这种情况。
+
+## 运行你的Agent
+在进行这一部分之前，得确定你已经完成了Quick Start章节的环境的安装并且已经成功的把[这个视频](https://www.youtube.com/watch?v=ES_bpdRiSNM)里的操作完成哈😊。
+
+### 创建一个Agent
+1. 首先创建一个新的package,命名为groupn,其中n是你们组完队之后老师用邮箱发给你们的组号。
+2. 
