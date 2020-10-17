@@ -47,7 +47,7 @@ Lab2 第2部分说的是，告诉你每次都要编译一下自己的java文件(
 从现在开始的每一章节，每个实验都会开始介绍Genius的一些特性与方法💆‍♂️。这是比较重要的内容，因为你们的算法创新其实都是建立于Genius提供的API之上的哈。
 
 ### UtilitySpace
-首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包，你把鼠标悬浮在报错的地方，导入就可以啦😬。
+首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包。你右键你的项目->点击Open Module Setting->点击左边Library->点击中间窗口的加号->选择Java->选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。
 ```java
 AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
@@ -76,16 +76,55 @@ for (Issue issue : issues) {
 
 
 
-1.  ```init()```
+-  ```init()```
 这是你的Agent的初始化函数，可以把它当做是整个Agent的入口🚪。也就是说，比赛的刚开始，你需要把所有的状态准备好，最主要的是预测自己的模型。这么说有点抽象，那我打个比方吧，就想运动员准备比赛一样，比赛前需要补能量，热身啥的，咱们的agent也需要时间去做准备。也就是在1分钟左右的时间内，去计算自己的模型。然后才进行Negotiation。在这里，咱们先别管如何预测自己的模型。只需要知道init的作用就好啦。
 
-2.  ```super.init(info)```
+-  ```super.init(info)```
 这个是继承父类的初始化方法。封装，继承和多态，是面向对象的三个基本特性。没有面向对象语言基础(c++,java,python)的童鞋，可以补一补相关的内容。当然，你也可以不去理解这个代码的意思🙅‍♀️，不影响你后面的设计。
 
-3. 下面的代码的意思为首先要通过```info.getUtilitySpace()```获得一个类型为``` AbstractUtilitySpace``` 的 ```utilitySpace ```。这个```utilitySpace ```就是你个人的preference profile,然后你需要将它转为```AdditiveUtilitySpace```,因为我们只考虑这个情况。🙋‍♂️有人肯定会问，不是不知道自己的preference嘛，不是要自己计算的嘛。对，这个实验只是帮你了解这些用法，所以才用这个方法。真实比赛的时候，是获取不到自己真实的```utilitySpace ```。
+- 下面的代码的意思为首先要通过```info.getUtilitySpace()```获得一个类型为``` AbstractUtilitySpace``` 的 ```utilitySpace ```。这个```utilitySpace ```就是你个人的preference profile,然后你需要将它转为```AdditiveUtilitySpace```,因为我们只考虑这个情况。🙋‍♂️有人肯定会问，不是不知道自己的preference嘛，不是要自己计算的嘛。对，这个实验只是帮你了解这些用法，所以才用这个方法。真实比赛的时候，是获取不到自己真实的```utilitySpace ```。
 ```java 
 AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
+```
+
+- 对于当前的```utilitySpace```,你可以通过getDomain()方法获得当前的domain下的一个对象。然后再使用```getIssues()```方法，可以获得这个对象下的所有的issues，存放在一个java数据结构```List```里，```List```里存放的都是```Issue```类型的数据。🧠Java新手可要好好品味这句话的意思噢。。```List <Issue>```这是Java中泛型的概念，需要了解噢。
+```java
+List< Issue > issues = additiveUtilitySpace.getDomain().getIssues();
+```
+
+- ```for (Issue issue : issues)```这是java for循环的一种特殊的写法，有点像python中的```for issue in issues```。剩下的操作就是遍历获得你的```utilitySpace```下的```issue```的索引号```int issueNumber = issue.getNumber()```和名字```issue.getName()```，还有其所占的权重```additiveUtilitySpace.getWeight(issueNumber))```。🤷‍♀️这节实验基本上就是让你熟悉API的。
+
+- 下面的代码实际上是为了获得你对不同```issue```下的item的evaluation。在那之前，我们需要将这些```issue```转化为离散类型的(discrete)。🐨因为我们只考虑离散类型的实验。
+```java
+    // Assuming that issues are discrete only
+    IssueDiscrete issueDiscrete = (IssueDiscrete) issue;
+    EvaluatorDiscrete evaluatorDiscrete = (EvaluatorDiscrete) additiveUtilitySpace.getEvaluator(issueNumber);
+```
+
+- 又来一层for循环，这些的for循环是为了打印出不同的value和evaluation的值。至于最后的```try catch```异常捕获的方法，如果java新手不了解的话，可以了解一下。当然你不了解，对之后的实验也没多大的影响的哈😊。
+```java
+    for (ValueDiscrete valueDiscrete : issueDiscrete.getValues()) {
+        System.out.println(valueDiscrete.getValue());
+        System.out.println("Evaluation(getValue): " + evaluatorDiscrete.getValue(valueDiscrete));
+        try {
+            System.out.println("Evaluation(getEvaluation): " + evaluatorDiscrete.getEvaluation(valueDiscrete));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+- 最后，你运行你的agent，IDEA的控制台会输入如下的输出。🦄这实际上就是把agent在当前剧本下的weight, value, evaluation打印出来而已。最后还是要强调一下，这些东西是帮你了解Genius，但是最后的比赛，你是不会直接通过additiveUtilitySpace获得你在当前剧本下的preference🙉。
+```
+>> Food weight: 0.19
+Chips and Nuts
+Evaluation(getValue): 3
+Evaluation(getEvaluation): 1.0
+Finger-Food
+Evaluation(getValue): 2
+Evaluation(getEvaluation): 0.6666666666666666
 ```
 
 
