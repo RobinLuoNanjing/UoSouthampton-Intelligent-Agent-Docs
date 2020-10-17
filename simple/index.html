@@ -157,7 +157,7 @@
 <h2 id="agent_3">理解你的Agent有哪些属性和方法</h2>
 <p>从现在开始的每一章节，每个实验都会开始介绍Genius的一些特性与方法💆‍♂️。这是比较重要的内容，因为你们的算法创新其实都是建立于Genius提供的API之上的哈。</p>
 <h3 id="utilityspace">UtilitySpace</h3>
-<p>首先你们所要做的，就是将下面的代码复制到<code>init()</code>函数里,也就是<code>super.init(info);</code>的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包，你把鼠标悬浮在报错的地方，导入就可以啦😬。</p>
+<p>首先你们所要做的，就是将下面的代码复制到<code>init()</code>函数里,也就是<code>super.init(info);</code>的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包。你右键你的项目-&gt;点击Open Module Setting-&gt;点击左边Library-&gt;点击中间窗口的加号-&gt;选择Java-&gt;选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。</p>
 <pre><code class="language-java">AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
 
@@ -182,7 +182,7 @@ for (Issue issue : issues) {
     }
 }
 </code></pre>
-<ol>
+<ul>
 <li>
 <p><code>init()</code>
 这是你的Agent的初始化函数，可以把它当做是整个Agent的入口🚪。也就是说，比赛的刚开始，你需要把所有的状态准备好，最主要的是预测自己的模型。这么说有点抽象，那我打个比方吧，就想运动员准备比赛一样，比赛前需要补能量，热身啥的，咱们的agent也需要时间去做准备。也就是在1分钟左右的时间内，去计算自己的模型。然后才进行Negotiation。在这里，咱们先别管如何预测自己的模型。只需要知道init的作用就好啦。</p>
@@ -194,9 +194,51 @@ for (Issue issue : issues) {
 <li>
 <p>下面的代码的意思为首先要通过<code>info.getUtilitySpace()</code>获得一个类型为<code>AbstractUtilitySpace</code> 的 <code>utilitySpace</code>。这个<code>utilitySpace</code>就是你个人的preference profile,然后你需要将它转为<code>AdditiveUtilitySpace</code>,因为我们只考虑这个情况。🙋‍♂️有人肯定会问，不是不知道自己的preference嘛，不是要自己计算的嘛。对，这个实验只是帮你了解这些用法，所以才用这个方法。真实比赛的时候，是获取不到自己真实的<code>utilitySpace</code>。</p>
 </li>
-</ol>
+</ul>
 <pre><code class="language-java">AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
+</code></pre>
+<ul>
+<li>对于当前的<code>utilitySpace</code>,你可以通过getDomain()方法获得当前的domain下的一个对象。然后再使用<code>getIssues()</code>方法，可以获得这个对象下的所有的issues，存放在一个java数据结构<code>List</code>里，<code>List</code>里存放的都是<code>Issue</code>类型的数据。🧠Java新手可要好好品味这句话的意思噢。。<code>List &lt;Issue&gt;</code>这是Java中泛型的概念，需要了解噢。</li>
+</ul>
+<pre><code class="language-java">List&lt; Issue &gt; issues = additiveUtilitySpace.getDomain().getIssues();
+</code></pre>
+<ul>
+<li>
+<p><code>for (Issue issue : issues)</code>这是java for循环的一种特殊的写法，有点像python中的<code>for issue in issues</code>。剩下的操作就是遍历获得你的<code>utilitySpace</code>下的<code>issue</code>的索引号<code>int issueNumber = issue.getNumber()</code>和名字<code>issue.getName()</code>，还有其所占的权重<code>additiveUtilitySpace.getWeight(issueNumber))</code>。🤷‍♀️这节实验基本上就是让你熟悉API的。</p>
+</li>
+<li>
+<p>下面的代码实际上是为了获得你对不同<code>issue</code>下的item的evaluation。在那之前，我们需要将这些<code>issue</code>转化为离散类型的(discrete)。🐨因为我们只考虑离散类型的实验。</p>
+</li>
+</ul>
+<pre><code class="language-java">    // Assuming that issues are discrete only
+    IssueDiscrete issueDiscrete = (IssueDiscrete) issue;
+    EvaluatorDiscrete evaluatorDiscrete = (EvaluatorDiscrete) additiveUtilitySpace.getEvaluator(issueNumber);
+</code></pre>
+<ul>
+<li>又来一层for循环，这些的for循环是为了打印出不同的value和evaluation的值。至于最后的<code>try catch</code>异常捕获的方法，如果java新手不了解的话，可以了解一下。当然你不了解，对之后的实验也没多大的影响的哈😊。</li>
+</ul>
+<pre><code class="language-java">    for (ValueDiscrete valueDiscrete : issueDiscrete.getValues()) {
+        System.out.println(valueDiscrete.getValue());
+        System.out.println(&quot;Evaluation(getValue): &quot; + evaluatorDiscrete.getValue(valueDiscrete));
+        try {
+            System.out.println(&quot;Evaluation(getEvaluation): &quot; + evaluatorDiscrete.getEvaluation(valueDiscrete));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>最后，你运行你的agent，IDEA的控制台会输入如下的输出。🦄这实际上就是把agent在当前剧本下的weight, value, evaluation打印出来而已。最后还是要强调一下，这些东西是帮你了解Genius，但是最后的比赛，你是不会直接通过additiveUtilitySpace获得你在当前剧本下的preference🙉。</li>
+</ul>
+<pre><code>&gt;&gt; Food weight: 0.19
+Chips and Nuts
+Evaluation(getValue): 3
+Evaluation(getEvaluation): 1.0
+Finger-Food
+Evaluation(getValue): 2
+Evaluation(getEvaluation): 0.6666666666666666
 </code></pre>
 <h3 id="concession-strategy">Concession Strategy</h3>
               
