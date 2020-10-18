@@ -47,7 +47,9 @@ Lab2 第2部分说的是，告诉你每次都要编译一下自己的java文件(
 从现在开始的每一章节，每个实验都会开始介绍Genius的一些特性与方法💆‍♂️。这是比较重要的内容，因为你们的算法创新其实都是建立于Genius提供的API之上的哈。
 
 ### UtilitySpace
-首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包。你右键你的项目->点击Open Module Setting->点击左边Library->点击中间窗口的加号->选择Java->选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。
+首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包。你把箭头放在标红的地方，然后上面应该有提示import class。
+
+<--你右键你的项目->点击Open Module Setting->点击左边Library->点击中间窗口的加号->选择Java->选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。-->
 ```java
 AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
@@ -130,3 +132,42 @@ Evaluation(getEvaluation): 0.6666666666666666
 
 
 ### Concession Strategy
+从现在开始，我们需要讲解一下协商策略。协商策略包含三个可能的actions:
+
+1. 接受对手的offer 🔨
+
+2. 自己报价一个offer ✂️
+
+3. 结束negotiation 🙅‍♀️
+
+字面上很容易理解这三个行为，但是如何去实现这些行为呢？这就用到了Genius给我们提供的interface啦。
+
+- ```public void receiveMessage(AgentID sender, Action action)``` 这个函数，就是用来接收对手offer之后，处理对手信息的地方。🏡什么叫处理信息呢？这里我就拿我的agent举例吧。比如说我要计算对手模型，就是对手每一次报价，我都把它的报价存起来，然后进行计算，算出对手的preference。那么我就会在这个函数里调用一个方法，专门把对手的offer存放在一个地方，用来计算。
+
+- 下面的函数是用来做出行为的。可以看到，这里设置了，如果在最后时刻，如果获得到的效用大于我自己的reservation value，那么我就接受offer，不然，我就结束协商。(这个策略行为就很头铁，就是到最后时刻才做出决定🐷)。那时间在[0,0.99]他要干嘛呢？他要```return new Offer(getPartyId(), generateRandomBidAboveTarget());```，也就是报价offer，且这个offer是radomly generate(随便报价的)，虽然是random generation，但是它也会限定，报的bid是要大于我自己设定的target的。😅 你们可以自己看一下这个函数的实现哈。比赛的时候，你们可不能用随机报价啊，那分数会很低的。
+```java
+	@Override
+	public Action chooseAction(List<Class<? extends Action>> possibleActions) 
+	{
+		// Check for acceptance if we have received an offer
+		if (lastOffer != null)
+			if (timeline.getTime() >= 0.99)
+				if (getUtility(lastOffer) >= utilitySpace.getReservationValue()) 
+					return new Accept(getPartyId(), lastOffer);
+				else
+					return new EndNegotiation(getPartyId());
+		
+		// Otherwise, send out a random offer above the target utility 
+		return new Offer(getPartyId(), generateRandomBidAboveTarget());
+	}
+```
+
+### Tournaments
+竞标赛(Tournaments)其实大家也不用怎么看，因为你们自己模拟调试的时候都是1v1的，只有最后比赛的时候才考虑竞标赛模式。
+
+## 总结
+最重要的还是熟悉```init()```,```receiveMessage()```,```chooseAction()```这三个函数哈。因为你的agent是肯定需要用到这三个函数的💪。
+
+
+
+
