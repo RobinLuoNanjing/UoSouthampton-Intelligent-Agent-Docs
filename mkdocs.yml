@@ -5,6 +5,7 @@ nav:
     - Quick Start: start.md
     - Basic Concept (Lab1): basic.md
     - Simple Agent (Lab2): simple.md
+    - Opponent Model (Lab3): opponent.md
 
 theme: readthedocs
 

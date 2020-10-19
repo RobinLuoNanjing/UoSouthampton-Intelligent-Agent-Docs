@@ -49,7 +49,7 @@ Lab2 第2部分说的是，告诉你每次都要编译一下自己的java文件(
 ### UtilitySpace
 首先你们所要做的，就是将下面的代码复制到```init()```函数里,也就是```super.init(info);```的后面。或许你们有些人没有java基础，或者有些人只是复习了java的数据结构，对下面的还是一头雾水😭。没关系，我会带你们一行行的理解代码哒，到后面你们熟练了自然而然熟能生巧😁。哦，对了，在插入代码的过程中，可能会报错，就是要你import相应的包。你把箭头放在标红的地方，然后上面应该有提示import class。
 
-<--你右键你的项目->点击Open Module Setting->点击左边Library->点击中间窗口的加号->选择Java->选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。-->
+<!--你右键你的项目->点击Open Module Setting->点击左边Library->点击中间窗口的加号->选择Java->选择genius-9.1.11文件下下的genius-9.1.11.jar就可以啦😬。-->
 ```java
 AbstractUtilitySpace utilitySpace = info.getUtilitySpace();
 AdditiveUtilitySpace additiveUtilitySpace = (AdditiveUtilitySpace) utilitySpace;
