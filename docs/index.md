@@ -57,7 +57,7 @@ Hello, Southampton大学的AI同学你们好哈😊。我知道你们都要学�
 
 [2,3] 是另外一个大佬，[Professor Gopal Ramchurn](https://www.ecs.soton.ac.uk/people/sdr1#publications)。最近三年，4篇AAMAS, 1篇AAAI, 2篇IJCAI, 2篇CHI (CCF 人机交互A类), 1篇SIGKDD, 1篇AI, 1篇PR... 哎，有钱真的可以为所欲为的招博士打工😱。
 
-(ps📚: 这里罗列了很多AI顶会顶刊的缩写。可能很多童鞋不是很懂🙉。如果感兴趣的话，我可以跟你们说说这些论文，方便以后你们也可以和我一起愉快的装🍺。)
+(ps📚: 这里罗列了很多AI顶会顶刊的缩写。可能很多童鞋不是很懂🙉。如果感兴趣的话，我可以跟你们说说这些论文，方便以后你们也可以和我一起愉快的装🍺。国内的CCF(中国计算机协会)每年都会给不同的会议和期刊评级，分为ABC三类，当然，这三类都是顶会。你们可以通过[链接](https://www.ccf.org.cn/ccf/contentcore/resource/download?ID=99185) 来下载这份目录🤗。当然，虽然分ABC三类，但是AI下面分支比较多，不同的分支所看重的会议论文是不一样的，比如视觉:CVPR,ICCV,ECCV。自然语言处理:NeurIPS,ACL,机器学习: ICML, Agent:AAMAS, 还有诸如AAAI,IJCAI等。当然这份评级只是作为参考而已。
 
 <center>
     <img style="border-radius: 0.3125em;
