@@ -77,6 +77,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="simple/">Simple Agent (Lab2)</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="opponent/">Opponent Model (Lab3)</a>
+                    </li>
+                </ul>
       </div>
     </div>
     </nav>
@@ -112,6 +116,7 @@
                 <h1 id="welcome-to-intelligent-agent-world">Welcome to Intelligent Agent world</h1>
 <p>Hello, Southampton大学的AI同学你们好哈😊。我知道你们都要学习Intelligent Agent这门必修课的(🤦‍♂️可能有些cs系的学生也选了这门课哈，就是提前打个预防针，这门课，很多内容比较有意思，但就是难度比较高，给分不高。比起Foundation of AI这门课的考试难度，你们选这门课需要酌情一下自己是否在意这些。虽然去年AI你们的学长学姐们已经投诉了这门课，应该会有所改观)。</p>
 <p>虽然这门课对以后的就业没有太多的帮助(因为业界主流的AI方向还是机器学习深度学习方向)，但是这门课涉及了很多博弈论，运筹学的知识，非常有意思。值得一提的是，2020年诺贝尔经济学奖颁发给了两名经济学家，以表彰他们对拍卖理论的完善和新型拍卖形式的发明。没错，Auction(拍卖)也是你们要在这门课里学习的噢。</p>
+<p>(ps📚:可能很多人被我吓的不敢选这门课了😓but,这门课除了博弈论内容很有意思以外，还适合对强化学习感兴趣的童鞋去学习🤩。虽然multi-agent并不是强化学习，但是现在很多的multi-agent都是在用强化学习的内容去解决问题的🙃我曾经听过UCL的教授的一个讲座，他就是将进化算法，multi-agent以及强化学习结合起来，解决自动驾驶的问题的。同时如果你留意最近的AI顶会，强化学习相关的论文中有不少是设计到multi-agent的。)</p>
 <p>有趣归有趣，可是这门课，无论是Coursework还是Exam，应该都是AI系第一学期最难的，没有之一🤣。但是，请你们不要畏惧大作业，因为大作业真的是如果你懂了，那么就很容易拿一个体面的分数，如果你踩了坑，那么分数会低的可怕。其实根据我和我上届学长的交流中可以发现，这门课的大作业虽然是四人组队，但大部分组都是一个人完成大部分的，一方面是内容确实难，另外一方面是确实很多人不会Java。我当时做的时候也是不断踩坑，希望得到更多的帮助。</p>
 <p>那么，这也是我写这个docs的目的，我想让更多学生能够接触这门课程，而不是全程划水，最后agent比赛的时候靠运气。想要把前任学长学姐的经验传给下一代，把积累的经验一代代传下去。</p>
 <p>总的来说，这个文档会教会你什么？（以下内容只是一个草稿哈）</p>
@@ -146,6 +151,7 @@
 <p>[1,1] 是大老板<a href="https://www.ecs.soton.ac.uk/people/tjn1f15#_ga=2.258324554.13544906.1602674669-357846429.1552973807">Tim Norman</a>, 他也有可能参与到这门课的教学当中来，比如上学期，他就教我们去中心化的内容。</p>
 <p>[2,2] 是<a href="https://cmg.soton.ac.uk/people/raw1/">Richard Watson</a>,是你们Foundation of AI 的老师。看样貌平平无奇，上课的内容看似索然无味，没有用处。但是他给分松，而且考试难度低。是真的好哈。他的研究方向还是比较偏进化算法相关的。</p>
 <p>[2,3] 是另外一个大佬，<a href="https://www.ecs.soton.ac.uk/people/sdr1#publications">Professor Gopal Ramchurn</a>。最近三年，4篇AAMAS, 1篇AAAI, 2篇IJCAI, 2篇CHI (CCF 人机交互A类), 1篇SIGKDD, 1篇AI, 1篇PR... 哎，有钱真的可以为所欲为的招博士打工😱。</p>
+<p>(ps📚: 这里罗列了很多AI顶会顶刊的缩写。可能很多童鞋不是很懂🙉。如果感兴趣的话，我可以跟你们说说这些论文，方便以后你们也可以和我一起愉快的装🍺。国内的CCF(中国计算机协会)每年都会给不同的会议和期刊评级，分为ABC三类，当然，这三类都是顶会。你们可以通过<a href="https://www.ccf.org.cn/ccf/contentcore/resource/download?ID=99185">链接</a> 来下载这份目录🤗。当然，虽然分ABC三类，但是AI下面分支比较多，不同的分支所看重的会议论文是不一样的，比如视觉:CVPR,ICCV,ECCV。自然语言处理:NeurIPS,ACL,机器学习: ICML, Agent:AAMAS, 还有诸如AAAI,IJCAI等。当然这份评级只是作为参考而已。</p>
 <p><center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
@@ -281,5 +287,5 @@
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-10-18 17:45:42.725346+00:00
+Build Date UTC : 2020-10-19 18:53:25.612632+00:00
 -->
