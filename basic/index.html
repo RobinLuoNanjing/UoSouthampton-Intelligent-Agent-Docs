@@ -158,7 +158,7 @@
 <p>那么对B呢？B的Preference Profile如下图。那么<span class="arithmatex">\(U=0.6*(100/100)+0.3*(3/3)+0.1*(1/1)=1\)</span>,utility为1。这说明这个offer是B最想要的。同时你也应该明白，utility的范围是[0,1]。你可以通过实验中的table 3去计算其他offer对A和B不同的utility来加深理解噢。
 <img alt="evalB" src="../img/basic/evalB.jpg" /></p>
 <p>😎读到这，你是不是能稍微明白点agent的意思了？稍稍提前透露下，之后的Agent大作业实际上可以理解为两边互相出offer。一方面你需要计算自己的preference(因为你不知道自己的preference是多少，所以你需要算法算出来)，这样你报offer才能往自己偏好的方向出，另一方面你也不知道对手的preference，你也得通过对手每轮报价的offer去计算出对手的报价模型。最理想的情况就是你出的offer是自己喜欢的，对手不喜欢的。最差的情况就是你没猜中自己和对手的模型，报价一个自己最讨厌，但对手喜欢的。那么对手就会同意报价，此时你的utility会明显低于对手，那么你在一定程度上就输了🙀。</p>
-<p>噢，对了。在Lab1 1.2 的最后抛出了一个definition: Pareto optimality。🤗我觉得知乎上的这个回答写的不错，你们可以去理解下： <a href="如何通俗地解释「帕累托最优」（Pareto optimum）？">如何通俗地解释「帕累托最优」（Pareto optimum）？</a>。当然，上课的ppt中也会提到帕累托最优，这个知识点你们需要理解的哈。</p>
+<p>噢，对了。在Lab1 1.2 的最后抛出了一个definition: Pareto optimality。🤗我觉得知乎上的这个回答写的不错，你们可以去理解下： <a href="https://www.zhihu.com/question/22570835/answer/21816685">如何通俗地解释「帕累托最优」（Pareto optimum）？</a>。当然，上课的ppt中也会提到帕累托最优，这个知识点你们需要理解的哈。</p>
 <h2 id="genius">Genius实操</h2>
 <p>Lab1 3.1内容中介绍了如何创建一个domain,并且创建两个preference profile，让他俩开始negotiate。你可以理解为你写了一个剧本，剧本中有两个人，两个人根据自己的不同偏好进行报价谈判。</p>
 <p>这一部分内容因为你只需要跟着lab做一遍就好啦，我也就不细讲啦。</p>
