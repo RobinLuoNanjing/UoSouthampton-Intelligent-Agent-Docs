@@ -79,6 +79,16 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#johny-black">Johny Black</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">理论</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#java">Java代码实现</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#valuenew">定义一个新的类: ValueNew</a>
+    </li>
+        </ul>
     </li>
     </ul>
                     </li>
@@ -143,11 +153,52 @@
 <p>有些人的Agent很头铁，非要给自己utility 0.9, 给对手0.3。虽然你的individual utility高，但是你的nash point这一项分数低的吓人(这也是为什么会出现负分的情况)。</p>
 <p>我觉得如果说看完我这套docs,你能学到一个比较好的预测对手模型算法和一个比较好的预测自己模型的算法，但是想要得到突破，那就要在这个地方有所突破(前提是今年的bonus还是Nash point)，因为我这个得分点做的不是很好🥬。</p>
 <h2 id="johny-black">Johny Black</h2>
+<h3 id="_2">理论</h3>
 <p>接下来我会带大家一起用Java复现Johny Black论文，当然，默认大家已经读过这篇论文了，没读的点击👆 <a href="https://secure.ecs.soton.ac.uk/notes/comp6203/papers/JohnnyBlack.pdf">Johny Black</a>,下载下来读一读哈。</p>
 <p>当然，这篇论文也写了Accepting strategy (接受offer的策略) 和 Bidding strategy(出价策略)。你们也可以学习一下。但是他没有写预测自己模型的策略，因为那时候比赛还没有引入这个机制👀。</p>
 <p>这篇论文其实还是比较容易理解的(比起Foundation of AI 让你读的那些五六十年代的长篇文章，这篇真的是良心，你能读得懂，并且你能容易复现🤣)，其实文章的开头部分你都可以略读，但是到了 2.3.3 Example Model这一节，你只需要把这个例子自己推一遍，如下图，就可以理解Johny Black的精髓: 通过频数去推断对手更想获得的option。</p>
 <p><img alt="johny" src="../img/opponent/johny.jpg" /></p>
 <p>什么意思呢😇？打个比方，在issue这个下面有可乐，雪碧，芬达三个options。如果你更喜欢可乐，最不喜欢芬达。那么你的每一次offer，都会尽可能的去选可乐。可能你报的10个offer中，有7个选了可乐，2个选了雪碧，1个选了芬达。那么你的偏好就会被我知道啦！🤪</p>
+<h2 id="java">Java代码实现</h2>
+<p>（注意🐞：切记直接抄代码，或者只是修改变量名，而非修改逻辑。IA这门课是会对过去的代码进行查重的噢。在英国，抄袭可是很严重的。）</p>
+<p>在Java代码实现的过程中，我们需要明确一个概念，就是尽可能的利用Genius提供的类去写代码🤔。比方说，<code>import genius.core.issue.Value;</code> Genius提供了Value这个类，那我们就得想尽办法在这个类的基础上去进行值的操作。这样，你在实现的过程中会简单许多🤫 ！</p>
+<p>当然，我的java能力不是特别好。如果有java大哥能写出更优质的代码，欢迎issue🥬。</p>
+<h3 id="valuenew">定义一个新的类: ValueNew</h3>
+<p>首先，我定义了一个新的类，叫<code>ValueNew</code>。可以看到，我这个<code>ValueNew</code>里，存放了一个<code>Value</code>属性的值名字叫<code>valuename</code>。也就是说，我这个值通过调用valuename来实现Genius的中的<code>Value</code>类型的功能。</p>
+<p>不仅如此，我还让我的ValueNew继承了 Comparator的接口。原先的<code>Value</code>类型是无法比较大小的。但是现在，我继承了<code>Comparator</code>接口，让其在<code>compare()</code>函数中定义了一个比较规则，规定，所有的<code>ValueNew</code>类型的值，根据其内部的count数来排大小🐷。 (Java萌新注意:这里一下子就提到了面向对象的两个特性:继承和多态。首先我们继承了<code>Comparator</code>这个接口。这个接口本身就是用来比较大小用的。其次我们也重写了<code>Comparator</code>中的<code>compare()</code>方法，可以理解为重新制定了一个比较方法。)</p>
+<p>为什么要那么麻烦继承一个<code>Comparator</code>呢🧐？实际上，回顾Johny Black论文中，里面是不是有个要求，是根据options出现的频数来排顺序？我现在的功能就是完成排顺序这个环节。现在你可能还看不出来这用处，但是到后面你就会理解啦。</p>
+<pre><code class="language-java">import genius.core.issue.Value;
+import java.util.Comparator;
+
+   public class ValueNew implements Comparator&lt;ValueNew&gt; {
+       public Value valueName;
+       public int count=0;    //计数器，记录一共出现了多少次
+       public int rank=0;     //根据options出现的次数，排一个rank，其中出现次数越多，rank越大
+       public int totalOfOptions=0;  //记录当前options有多少个。也就是说一个value下有多少个options
+       public int countBidNumber=0;  //记录对手一共出了多少次bid，也就是每个issue中的value总频数
+       public double calculatedValue=0.0f; //论文上用来计算每个options的calculatedValue
+       public double weightUnnormalized=0.0f; //在论文中是count/出现的总次数值
+
+       public ValueNew(Value valueName) {
+           this.valueName = valueName;
+       }
+
+       //我们需要根据count数目进行排序
+       @Override
+       public int compare(ValueNew o1, ValueNew o2) {
+           if(o1.count &lt; o2.count){
+               return 1;
+           }else{
+               return -1;
+           }
+       }
+       public void compute(){
+           this.calculatedValue=((this.totalOfOptions-(double)this.rank+1)/this.totalOfOptions);
+           double temp=((double) this.count/(double) this.countBidNumber);
+           this.weightUnnormalized=Math.pow(temp,2);
+       }
+   }
+</code></pre>
               
             </div>
           </div>
