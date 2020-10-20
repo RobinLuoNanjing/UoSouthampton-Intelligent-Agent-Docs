@@ -78,6 +78,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#johny-black">Johny Black</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -140,6 +142,12 @@
 <p>你可能会问，为什么我回答这小节这么随意呢😓一方面 <span class="arithmatex">\(argmax\)</span> 这种情况很难计算。另外一方面，<span class="arithmatex">\(U_{i}\left(o_{\text {disagr}}\right)\)</span>,你要考虑未达成一致的协议的情况，导致很难取求纳什点。至少我没有计算很准确的纳什点。为什么这个这么重要😣因为我们那一届，如果你和对手达成一致的offer距离Nash point很近的话，是可以当做bonus，分数会高很多的。</p>
 <p>有些人的Agent很头铁，非要给自己utility 0.9, 给对手0.3。虽然你的individual utility高，但是你的nash point这一项分数低的吓人(这也是为什么会出现负分的情况)。</p>
 <p>我觉得如果说看完我这套docs,你能学到一个比较好的预测对手模型算法和一个比较好的预测自己模型的算法，但是想要得到突破，那就要在这个地方有所突破(前提是今年的bonus还是Nash point)，因为我这个得分点做的不是很好🥬。</p>
+<h2 id="johny-black">Johny Black</h2>
+<p>接下来我会带大家一起用Java复现Johny Black论文，当然，默认大家已经读过这篇论文了，没读的点击👆 <a href="https://secure.ecs.soton.ac.uk/notes/comp6203/papers/JohnnyBlack.pdf">Johny Black</a>,下载下来读一读哈。</p>
+<p>当然，这篇论文也写了Accepting strategy (接受offer的策略) 和 Bidding strategy(出价策略)。你们也可以学习一下。但是他没有写预测自己模型的策略，因为那时候比赛还没有引入这个机制👀。</p>
+<p>这篇论文其实还是比较容易理解的(比起Foundation of AI 让你读的那些五六十年代的长篇文章，这篇真的是良心，你能读得懂，并且你能容易复现🤣)，其实文章的开头部分你都可以略读，但是到了 2.3.3 Example Model这一节，你只需要把这个例子自己推一遍，如下图，就可以理解Johny Black的精髓: 通过频数去推断对手更想获得的option。</p>
+<p><img alt="johny" src="../img/opponent/johny.jpg" /></p>
+<p>什么意思呢😇？打个比方，在issue这个下面有可乐，雪碧，芬达三个options。如果你更喜欢可乐，最不喜欢芬达。那么你的每一次offer，都会尽可能的去选可乐。可能你报的10个offer中，有7个选了可乐，2个选了雪碧，1个选了芬达。那么你的偏好就会被我知道啦！🤪</p>
               
             </div>
           </div>
