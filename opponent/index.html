@@ -90,6 +90,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#iamap">定义一个新的类: IaMap</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">总结</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -310,6 +312,27 @@ public class IaMap extends HashMap&lt;Issue, List&lt;ValueNew&gt;&gt; {
         }
     }
 </code></pre>
+<p>最后，你要给<code>IaMap</code>提供一个方法，这样，在你自己出offer的时候，可以看看自己准备出的offer，对手可以得到多少utility。(🤫一般是在出价策略的时候，会用到这个方法。因为你每次出价都得先知道自己要出的offer到底是对对方有利，还是不利)</p>
+<pre><code class="language-java">    public double JBpredict(Bid lastOffer){
+        //我们现在知道了每个issue的权重，现在需要来根据权重和每个value的evaluation来计算效用。
+        //计算效用
+        double utility=0.0f;   //先进行初始化
+
+        for(Issue issue:lastOffer.getIssues()){
+            int num=issue.getNumber();   //每一个issue我们都要将其转换为一个编号
+            for(ValueNew valueNew:this.get(issue)){
+                if(valueNew.valueName.toString().equals(lastOffer.getValue(num).toString())){   //注意，每个bid都可以通过getValue(num)知道这个issue(issue对应的num)下到底是什么value
+                    utility+=weightList.get(issue)*valueNew.calculatedValue;
+                    break;  //如果找到了，后面的valueNew就不需要找了。
+                }
+            }
+        }
+        return utility;
+    }
+</code></pre>
+<h3 id="_3">总结</h3>
+<p>这一章节是不是很刺激。我觉得肯定有人会认真读完我上面写的内容。希望能对你有所帮助。也希望你能有更好的代码结构来实现Johny Black🥊。</p>
+<p>当然，我知道很多人忙着读FAI的论文，写FML的lab，没时间去静下心来看这些。这些代码也算是能给你们分担一点压力好了🍺。</p>
               
             </div>
           </div>
