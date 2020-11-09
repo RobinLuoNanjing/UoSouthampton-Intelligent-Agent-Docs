@@ -61,7 +61,7 @@ Pareto Efficient Frontier，帕累托效用边界。在之前讲basic concept的
 
 当然，我的java能力不是特别好。如果有java大哥能写出更优质的代码，欢迎issue🥬。
 
-###定义一个新的类: ValueNew
+### 定义一个新的类: ValueNew
 首先，我定义了一个新的类，叫```ValueNew```。可以看到，我这个```ValueNew```里，存放了一个```Value```属性的值名字叫```valuename```。也就是说，我这个值通过调用valuename来实现Genius的中的```Value```类型的功能。
 
 不仅如此，我还让我的ValueNew继承了 Comparator的接口。原先的```Value```类型是无法比较大小的。但是现在，我继承了```Comparator```接口，让其在```compare()```函数中定义了一个比较规则，规定，所有的```ValueNew```类型的值，根据其内部的count数来排大小🐷。 (Java萌新注意:这里一下子就提到了面向对象的两个特性:继承和多态。首先我们继承了```Comparator```这个接口。这个接口本身就是用来比较大小用的。其次我们也重写了```Comparator```中的```compare()```方法，可以理解为重新制定了一个比较方法。)
@@ -102,6 +102,163 @@ import java.util.Comparator;
        }
    }
 ```
+至于```compute()```这个函数，其实是为了计算 $\hat{w}_{1}=\frac{{9}^{2}}{10}+\frac{{1}^{2}}{10} \quad=\frac{82}{100}$ 中每个```value```的权重，比如这个$\frac{{9}^{2}}{10}$。也就是说，每个```ValueNew```都具备自我计算权重的能力！🤓
+
+
+### 定义一个新的类: IaMap
+在上面，我们已经定义了一个```ValueNew```类，但仅有这个，还是不够的。打个比方，饮料```issue```下可能有三个```ValueNew```,可乐，雪碧，芬达。我现在只是能知道这些```ValueNew```的权重，但我并不知道饮料这个```Issue```的权重。那么这个```issue```的权重怎么求呢🧐 。论文中的 (5) 公式可以发现(下图)，我们需要将这个issue下的每个```ValueNew```的权重计算出来之后，选取最大的```ValueNew```除以他们的和。比如, 可乐($\frac{82}{100}$) 除以 可乐加雪碧($\frac{82}{100}+\frac{38}{100}$)🙄 。
+
+$$w_{1}=\frac{\frac{82}{100}}{\frac{82}{100}+\frac{38}{100}}=\frac{82}{120}$$
+
+
+为了实现这个过程，我们肯定是需要用到HashMap的。但是我不能直接去用它。为什么呢？因为对手的offer是不断的更新的，也就是说，对手出一次offer，你就得计算一次，出一次，计算一次🤨...如果你准备用HashMap去实现这个过程，将会复杂无比(for 循环很多，而且要不断的更新HashMap)。
+
+所以，我就新定义了一个类，叫```IaMap```。它是```HashMap```的儿子😬，所以继承```HashMap```的特性。不仅如此，它还能自我的更新与计算。
+
+```java
+/**整个类就是一个HashMap**/
+public class IaMap extends HashMap<Issue, List<ValueNew>> {
+
+    public int countBidNumber=0;    //用来计算对手出的bid的数量 
+    HashMap<Issue,Double> weightList=new HashMap<>();   //用来存放每个issue的权重
+
+    /**1.整个类的构造函数，用于存放着当前运行下的整个table。可以理解为初始化table**/
+    public IaMap(UserModel userModel){
+        super();   //继承所有Hashmap的用法
+        for(Issue issue:userModel.getDomain().getIssues()){          //遍历当前问题下的所有issue
+            IssueDiscrete values=(IssueDiscrete) issue;            //将issue展开为每个value
+            List<ValueNew> list =new ArrayList<>();   //每一个issue都要创建自己的一个List<ValueList>
+            for(int i=0;i<values.getNumberOfValues();i++){    //因为这里的Value类型不能直接for each，只能用getNumberOfValues
+                ValueNew temp=new ValueNew(values.getValue(i));   //对于每一个value类型，我们都转化为ValueNew类型
+                list.add(temp);   //对于每一个value，我们都会将valueNew放进列表里
+            }
+            this.put(issue,list);
+        }
+    }
+}
+```
+
+可以看出，IaMap继承了```HashMap<Issue,List<ValueNew>>```, 它的key存放着每个```issue```，value存放着这个```issue```下的所有```ValueNew```的列表。
+
+IaMap的构造函数(不懂构造函数的同学，可以理解为实例化一个类的时候，需要构造函数传值进去，初始化先)接收一个```UserModel```类型的对象。然后，通过```UserModel```提供的```getIssue()```方法，获取每个```issue```，以及```issue```下的```value```。因为我们得告诉模型，这个问题下有哪些```value```，然后才能进行频数的积累🤠。
+
+最方便的是，每次我们遍历一个```issue```之后，我们可以直接通过```this.put(issue,list)```把它存起来。因为```IaMap```本身就是一个```HashMap```。
+
+
+接下来就是定义```IaMap```中接收offer，并将其加入计算的方法啦。下面的代码确实有点长(可能是因为我自己写的比较啰嗦，应该可以被优化🤔)。 可以发现，我们慢慢的将```ValueNew```中的```totalOfOptions```，```rank```，```calculatedValue```，```weightUnnormalized```计算好。最好算出对手所有```issue```下的权重。
+
+```java
+    /**2.计算jonnyBlack的方法**/
+    public void JonnyBlack(Bid lastOffer){
+        this.countBidNumber+=1;  //用来算现在有多少个bid的数据了
+
+        //先遍历，打出个频数表
+        for(Issue issue: lastOffer.getIssues()){
+            int num=issue.getNumber();   //每一个issue我们都要将其转换为一个编号
+
+            for(ValueNew valueNew:this.get(issue)){   //通过issue我们可以找到IaMap中的每一行
+                if(valueNew.valueName.toString().equals(lastOffer.getValue(num).toString())){   //注意，每个bid都可以通过getValue(num)知道这个issue(issue对应的num)下到底是什么value
+                    valueNew.count+=1;
+                }
+
+                //这里要赋值每一个valueNew对象一个totalOfOptions的值，用来计算在当前这个value下，有多少个options。
+                IssueDiscrete issueDiscrete=(IssueDiscrete) issue;
+                valueNew.totalOfOptions=issueDiscrete.getNumberOfValues(); //每个options的数量传进去
+                valueNew.countBidNumber=this.countBidNumber;  //还要把这是第几个bid也传进去
+            }
+            Collections.sort(this.get(issue),this.get(issue).get(0));//每次对每一个list（this.get(issue)返回的是一个list），就对list进行降序。这里重写了排序方式，是根据count进行比较的
+
+            //因为上面刚排序完，我们需要根据这个排序，重新赋予每一个valueNew一个rank值，其中频数越大,rank值小
+            for(ValueNew valueNew:this.get(issue)){   //通过issue我们可以找到IaMap中的每一行
+                valueNew.rank=this.get(issue).indexOf(valueNew)+1;
+            }
+        }
+
+        //上面只是把表打好，但是一些计算还没有做好，所以现在要重新遍历一下每一个valueNew对象
+        for(Issue issue:lastOffer.getIssues()){
+            for(ValueNew valueNew:this.get(issue)){
+                valueNew.compute();   //这一步主要是要把ValueNew内部的calculatedValue和weightUnnormalized计算好
+            }
+        }
+
+        //做到这，该有的数据其实都有了，开始利用所有的数据，算权重了。但是这个循环不是为了算权重。而是为了归一化，求的分母totalWeight。（论文中第五个公式的分母）
+        double totalWeight=0.0f;    //先初始化一个总的权重，用于后来的归一化。
+        for(Issue issue: lastOffer.getIssues()){
+            for(ValueNew valueNew:this.get(issue)){
+                totalWeight+=valueNew.weightUnnormalized;
+            }
+        }
+
+        //现在才开始算每一个issue的权重
+        for(Issue issue:lastOffer.getIssues()){
+            double issueWeightUnnormalized=0; //存放每个issue的权重的临时变量
+            for(ValueNew valueNew:this.get(issue)){
+                issueWeightUnnormalized+=valueNew.weightUnnormalized;
+            }
+            double issueWeight=issueWeightUnnormalized/totalWeight;
+            this.weightList.put(issue,issueWeight);
+        }
+
+        //我们现在知道了每个issue的权重，现在需要来根据权重和每个value的evaluation来计算效用。
+        //计算效用
+        double utility=0.0f;   //先进行初始化
+        for(Issue issue:lastOffer.getIssues()){
+            int num=issue.getNumber();   //每一个issue我们都要将其转换为一个编号
+            for(ValueNew valueNew:this.get(issue)){
+                if(valueNew.valueName.toString().equals(lastOffer.getValue(num).toString())){   //注意，每个bid都可以通过getValue(num)知道这个issue(issue对应的num)下到底是什么value
+                    utility+=weightList.get(issue)*valueNew.calculatedValue;
+                    break;  //如果找到了，后面的valueNew就不需要找了。
+                }
+            }
+        }
+
+        System.out.println(countBidNumber+"对手效用是！！！！！！"+utility);
+    }
+```
+
+当然，要怎么用这个呢？回到你的agentXX中，我们每一次接收一个offer，是不是通过```receiveMessage(AgentID sender, Action action)```这个方法？那么我们使用```JonnyBlack(Bid lastOffer)```方法也是放在这。下面的代码可以看到，我每次得到一个对手的offer就把他扔进我的```IaMap```里进行计算🤖。(iaMap需要在```init```函数里通过```this.iaMap=new IaMap(userModel);```初始化👻)
+
+```java
+	@Override
+	public void receiveMessage(AgentID sender, Action action)
+	{
+		if (action instanceof Offer)   //instanceof 判断对象是否为Offer的一个实例
+		{
+			lastOffer = ((Offer) action).getBid();
+			iaMap.JonnyBlack(lastOffer);
+		}
+	}
+```
+
+最后，你要给```IaMap```提供一个方法，这样，在你自己出offer的时候，可以看看自己准备出的offer，对手可以得到多少utility。(🤫一般是在出价策略的时候，会用到这个方法。因为你每次出价都得先知道自己要出的offer到底是对对方有利，还是不利)
+
+```java
+    public double JBpredict(Bid lastOffer){
+        //我们现在知道了每个issue的权重，现在需要来根据权重和每个value的evaluation来计算效用。
+        //计算效用
+        double utility=0.0f;   //先进行初始化
+
+        for(Issue issue:lastOffer.getIssues()){
+            int num=issue.getNumber();   //每一个issue我们都要将其转换为一个编号
+            for(ValueNew valueNew:this.get(issue)){
+                if(valueNew.valueName.toString().equals(lastOffer.getValue(num).toString())){   //注意，每个bid都可以通过getValue(num)知道这个issue(issue对应的num)下到底是什么value
+                    utility+=weightList.get(issue)*valueNew.calculatedValue;
+                    break;  //如果找到了，后面的valueNew就不需要找了。
+                }
+            }
+        }
+        return utility;
+    }
+```
+
+
+## 总结
+这一章节是不是很刺激。我觉得肯定有人会认真读完我上面写的内容。希望能对你有所帮助。也希望你能有更好的代码结构来实现Johny Black🥊。
+
+当然，我知道很多人忙着读FAI的论文，写FML的lab，没时间去静下心来看这些。这些代码也算是能给你们分担一点压力好了🍺。
+
+
+
 
 
 
