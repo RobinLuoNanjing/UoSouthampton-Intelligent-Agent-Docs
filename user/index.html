@@ -98,6 +98,10 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_7">交叉和变异</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_8">调用</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_9">总结</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -505,6 +509,25 @@ public class GeneticAlgorithm {
         return additiveUtilitySpaceFactory.getUtilitySpace();
     }
 </code></pre>
+<h3 id="_8">调用</h3>
+<p>最后，你需要回到你的agent类，去调用类的实例。你的AgentXX 应该这样使用它：</p>
+<pre><code class="language-java">    public void init(NegotiationInfo info)   //参数初始化，获取在GUI获得的数据
+    {
+        super.init(info);   //用于收集所有的谈判参数
+        this.iaMap=new IaMap(userModel); //初始化对手模型。
+        GeneticAlgorithm geneticAlgorithm=new GeneticAlgorithm(userModel);//初始化自己的模型
+        this.predictAbstractSpace=geneticAlgorithm.geneticAlgorithm();
+        this.predictAdditiveSpace=(AdditiveUtilitySpace) predictAbstractSpace; //返回一个效用空间，这个累加效用空间，近似于当前的不确定效用空间
+        BidRanking bidRanking = userModel.getBidRanking();
+        this.maxBidForMe=bidRanking.getMaximalBid();  //先获得自己最高的bid用来迷惑对手
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out))); //用于关闭所有打印输出
+    }
+</code></pre>
+<h3 id="_9">总结</h3>
+<p>如果你认认真真的读过并且实现了我的代码，那么说明，你应该已经学会了遗传算法的思想。在此基础上，如果你能对crossover,fitness function有自己独到的见解和创新，那么你可能会表现的比我还要出色🍄。</p>
+<p>当然，希望你们能用好<code>AdditiveUtilitySpaceFactory</code>这个API，将它应用于更好的算法。比如我一直在想粒子群算法，模拟退火，蚁群算法能不能实现类似的功能。</p>
+<p>最后还是要提醒一下，不能直接抄我代码噢。Plagiarism在英国可是非常严重的一件事噢。Enrico已经说了，不能用以往的任何代码去实现你的Agent噢☠️。</p>
+<p>加下来我会继续更新关于Action以及如何写好report的一些经验。。。还是希望这些能够对你们有帮助的🦁。也欢迎大家能够和我交流，就当交个朋友🐮。</p>
               
             </div>
           </div>
