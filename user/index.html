@@ -96,7 +96,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_6">轮盘赌和精英选择</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_7">交叉</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">交叉和变异</a>
     </li>
         </ul>
     </li>
@@ -436,13 +436,27 @@ public class GeneticAlgorithm {
         return nextPopulation;
     }
 </code></pre>
-<h3 id="_7">交叉</h3>
+<h3 id="_7">交叉和变异</h3>
 <p>交叉应该是最有意思的一个部分了🐔。你不仅可以知道两个<code>AbstractUtilitySpace</code>是如何嘿嘿嘿🚘的，同时也可以知道他们生出的孩子是什么样子的。</p>
+<ol>
+<li>
+<p>首先要注意这个函数的参数是父<code>AbstractUtilitySpace</code>和母<code>AbstractUtilitySpace</code>。然后要定义几个变量。父亲的权重(wFather),母亲的权重(wMother),联合权重(wUnion)以及变异步长。父母权重其实还是比较好理解，但是联合权重和变异步长是什么鬼呢👻？不急，我们接着读下去。</p>
+</li>
+<li>
+<p>联合权重，没啥好扯的，就是父亲和母亲权重的平均权重。然后根据随机数来决定，大于50%的可能性，孩子的权重是高于wUnion，大多少由步长决定。小于50%的可能性，是低于wUnion。</p>
+</li>
+<li>
+<p>考虑变异的情况。之前定义的变异率就是在这里控制变异的概率的。</p>
+</li>
+<li>
+<p>我们刚刚只是交叉变异了每个issue的权重。但是每个issue下的value也是有权重的，也就是evaluation。我们用类似的方法也实现一次交叉变异。最后别忘了用内置的<code>normalizeWeights()</code>归一化权重。</p>
+</li>
+</ol>
 <pre><code class="language-java">    private AbstractUtilitySpace crossover(AdditiveUtilitySpace father,AdditiveUtilitySpace mother){
         double wFather;
         double wMother;
         double wUnion;
-        double mutationStep=0.35;    //变异最大步长 0.35
+        double mutationStep=0.35;    //1. 变异最大步长 0.35
 
 
         AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory=new AdditiveUtilitySpaceFactory(userModel.getDomain());
@@ -451,12 +465,11 @@ public class GeneticAlgorithm {
             wFather=father.getWeight(i);  //获取父亲的权重
             wMother=mother.getWeight(i);  //获取母亲的权重
 
-            //这里判断哪个父母的基因最好了
+            //2. 这里判断基因是偏向父亲还是偏向于母亲
             wUnion=(wFather+wMother)/2;
-
             if (Math.random()&gt;0.5){
                 double wChild=wUnion+mutationStep*Math.abs(wFather-wMother);
-                if (wChild &lt; 0.01) wChild = 0.01;
+                if (wChild &lt; 0.01) wChild = 0.01;  //权重的最小单位就是0.01
                 additiveUtilitySpaceFactory.setWeight(i,wChild);
             }
             else {
@@ -464,9 +477,10 @@ public class GeneticAlgorithm {
                 if (wChild &lt; 0.01) wChild = 0.01;
                 additiveUtilitySpaceFactory.setWeight(i,wChild);
             }
-            //考虑变异情况
+            //3. 考虑变异情况
             if(random.nextDouble()&lt;mutationRate) additiveUtilitySpaceFactory.setWeight(i,random.nextDouble());
 
+            //4. 每个issue下的value也是有自己的权重的
             for(ValueDiscrete v:i.getValues()){
                 wFather=((EvaluatorDiscrete)father.getEvaluator(i)).getDoubleValue(v);
                 wMother=((EvaluatorDiscrete)mother.getEvaluator(i)).getDoubleValue(v);
