@@ -93,7 +93,7 @@ import java.util.*;
 
 public class GeneticAlgorithm {
     private UserModel userModel;
-    private Random random=new Random();
+    private Random random=new Random(); //用于生成随机数
 
     private List<AbstractUtilitySpace> population=new ArrayList<AbstractUtilitySpace>();  //用于存放所有的累加效用空间population
     private int popSize=500;         //每一个population的总数
@@ -249,3 +249,144 @@ Fitness函数的质量决定了你得模型的效果。有时候，你就稍微�
     }
 ```
 
+
+### 随机产生一个UtilitySpace
+我们已经知道了种群中的个体是一个个```UtilitySpace```🙉,那我们如何创造他呢？这里就要说到一个🐂🍺的API,叫做```AdditiveUtilitySpaceFactory```，他可以帮助你```new```出一个新的```UtilitySpace```。因为这些```UtilitySpace```里的权重都是默认的，所以我们要随机的改变这些权重，确保种群的多样性。👻不然的话，你初始化的500个个体，都是一个模子打造出来的，那后代不也是一个模子吗？
+
+当然，```AdditiveUtilitySpaceFactory```不仅仅可以用在进化算法，还有诸如模拟退火，梯度下降，可能都需要这个API。
+```java
+    //产生一个随机的效用空间
+    private AbstractUtilitySpace getRandomChromosome(){
+        AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory=new AdditiveUtilitySpaceFactory(userModel.getDomain());  //直接获得当前utilitySpace下的domain.
+        List<Issue> issues=additiveUtilitySpaceFactory.getDomain().getIssues();
+        for(Issue issue:issues){
+            additiveUtilitySpaceFactory.setWeight(issue,random.nextDouble());    //设置每个issue的权重
+            IssueDiscrete values=(IssueDiscrete) issue;       //将issue强制转换为values集合
+            for (Value value:values.getValues()){            //通过values集合，获取每个value。
+                additiveUtilitySpaceFactory.setUtility(issue,(ValueDiscrete)value,random.nextDouble());   //因为现在是累加效用空间，随便设置一个权重之后，可以对当前这个value设置一个效用，效用随机。
+            }                                                                                            //当效用确定了之后，当前的value自己本身的值也就确定了。
+                                                                                                            //这里设置的效用是设置value的evaluation
+        }
+        additiveUtilitySpaceFactory.normalizeWeights(); //因为之前对每个value的效用值计算都是随机的，这个时候，需要归一化。
+        return  additiveUtilitySpaceFactory.getUtilitySpace();  //生成一个效用空间之后，返回这个效用空间。
+
+    }
+```
+
+
+### 轮盘赌和精英选择
+这个算法其实没啥好说的，就是假设有2000个个体，我要根据轮盘赌去选择多少个获得交配权，多少个精英直接保留。从而产生下一代种群。
+
+```java
+    //select算法，基于轮盘赌算法和精英策略。
+    private List<AbstractUtilitySpace> select(List<AbstractUtilitySpace> population, List<Double> fitnessList, int popSize){
+        int eliteNumber=2;   //保留多少个精英
+        List<AbstractUtilitySpace> nextPopulation=new ArrayList<>();  //用来存放下一代
+
+
+        //这一步我们需要先复制fitnessList。。
+        List<Double> copyFitnessList=new ArrayList<>();
+        for(int i=0;i<fitnessList.size();i++){
+            copyFitnessList.add(fitnessList.get(i));
+        }
+
+        //复制的好处，就是对copyFitnessList的修改不会影响，fitnessList
+        for(int i=0;i<eliteNumber;i++){
+            double maxFitness=Collections.max(copyFitnessList);   //先选取最大的效用
+            int index=copyFitnessList.indexOf(maxFitness);        //根据最大的效用，选取最大效用的index
+            nextPopulation.add(population.get(index));        //将最大效用的效用空间存放在下一代
+
+            double temp=-1000.0;  //初始化的值得很小。。因为在fitness函数中真的有机会得到很小的负值
+            Double tempDouble=new Double(temp);
+            //这里需要注意，每次找到一个精英，就需要把这个精英的效用降低为-1，以便让第二次循环找到第二个最大值
+            copyFitnessList.set(index,tempDouble);
+        }
+
+        //先保存所有的fitness
+        double sumFitness=0.0;
+        for(int i=0;i<eliteNumber;i++){
+            sumFitness+=fitnessList.get(i);
+        }
+
+        //轮盘赌算法
+        for(int i=0;i<popSize-eliteNumber;i++){
+            double randNum=random.nextDouble()*sumFitness;
+            double sum=0.0;
+            for(int j=0;i<population.size();j++){
+                sum+=fitnessList.get(i);
+                if(sum>randNum){
+                    nextPopulation.add(population.get(j));
+                    break;
+                }
+            }
+        }
+
+        return nextPopulation;
+    }
+```
+
+
+### 交叉和变异
+交叉应该是最有意思的一个部分了🐔。你不仅可以知道两个```AbstractUtilitySpace```是如何嘿嘿嘿🚘的，同时也可以知道他们生出的孩子是什么样子的。
+
+1. 首先要注意这个函数的参数是父```AbstractUtilitySpace```和母```AbstractUtilitySpace```。然后要定义几个变量。父亲的权重(wFather),母亲的权重(wMother),联合权重(wUnion)以及变异步长。父母权重其实还是比较好理解，但是联合权重和变异步长是什么鬼呢👻？不急，我们接着读下去。
+
+2. 联合权重，没啥好扯的，就是父亲和母亲权重的平均权重。然后根据随机数来决定，大于50%的可能性，孩子的权重是高于wUnion，大多少由步长决定。小于50%的可能性，是低于wUnion。
+
+3. 考虑变异的情况。之前定义的变异率就是在这里控制变异的概率的。
+
+4. 我们刚刚只是交叉变异了每个issue的权重。但是每个issue下的value也是有权重的，也就是evaluation。我们用类似的方法也实现一次交叉变异。最后别忘了用内置的```normalizeWeights()```归一化权重。
+```java
+    private AbstractUtilitySpace crossover(AdditiveUtilitySpace father,AdditiveUtilitySpace mother){
+        double wFather;
+        double wMother;
+        double wUnion;
+        double mutationStep=0.35;    //1. 变异最大步长 0.35
+
+
+        AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory=new AdditiveUtilitySpaceFactory(userModel.getDomain());
+        List<IssueDiscrete> issuesList=additiveUtilitySpaceFactory.getIssues();
+        for(IssueDiscrete i:issuesList){
+            wFather=father.getWeight(i);  //获取父亲的权重
+            wMother=mother.getWeight(i);  //获取母亲的权重
+
+            //2. 这里判断基因是偏向父亲还是偏向于母亲
+            wUnion=(wFather+wMother)/2;
+            if (Math.random()>0.5){
+                double wChild=wUnion+mutationStep*Math.abs(wFather-wMother);
+                if (wChild < 0.01) wChild = 0.01;  //权重的最小单位就是0.01
+                additiveUtilitySpaceFactory.setWeight(i,wChild);
+            }
+            else {
+                double wChild=wUnion-mutationStep*(Math.abs(wFather-wMother));
+                if (wChild < 0.01) wChild = 0.01;
+                additiveUtilitySpaceFactory.setWeight(i,wChild);
+            }
+            //3. 考虑变异情况
+            if(random.nextDouble()<mutationRate) additiveUtilitySpaceFactory.setWeight(i,random.nextDouble());
+            
+            //4. 每个issue下的value也是有自己的权重的
+            for(ValueDiscrete v:i.getValues()){
+                wFather=((EvaluatorDiscrete)father.getEvaluator(i)).getDoubleValue(v);
+                wMother=((EvaluatorDiscrete)mother.getEvaluator(i)).getDoubleValue(v);
+                //这里判断哪个父母的基因最好了
+                wUnion=(wFather+wMother)/2;
+
+                if (Math.random()>0.5){
+                    double wChild=wUnion+mutationStep*Math.abs(wFather-wMother);
+                    if (wChild < 0.01) wChild = 0.01;
+                    additiveUtilitySpaceFactory.setUtility(i,v,wChild);
+                }
+                else {
+                    double wChild = wUnion - mutationStep * Math.abs(wFather - wMother);
+                    if (wChild < 0.01) wChild = 0.01;
+                    additiveUtilitySpaceFactory.setUtility(i, v, wChild);
+                }
+                //考虑变异情况
+                if(random.nextDouble()<mutationRate) additiveUtilitySpaceFactory.setUtility(i,v,random.nextDouble());
+            }
+        }
+        additiveUtilitySpaceFactory.normalizeWeights();
+        return additiveUtilitySpaceFactory.getUtilitySpace();
+    }
+```

@@ -192,10 +192,13 @@ IaMap的构造函数(不懂构造函数的同学，可以理解为实例化一�
         //现在才开始算每一个issue的权重
         for(Issue issue:lastOffer.getIssues()){
             double issueWeightUnnormalized=0; //存放每个issue的权重的临时变量
+            double maxWeightUnnormalized=0;
             for(ValueNew valueNew:this.get(issue)){
-                issueWeightUnnormalized+=valueNew.weightUnnormalized;
+                if(valueNew.weightUnnormalized>maxWeightUnnormalized){
+                    maxWeightUnnormalized=valueNew.weightUnnormalized;
+                }
             }
-            double issueWeight=issueWeightUnnormalized/totalWeight;
+            double issueWeight=maxWeightUnnormalized/totalWeight;
             this.weightList.put(issue,issueWeight);
         }
 
