@@ -390,3 +390,31 @@ Fitness函数的质量决定了你得模型的效果。有时候，你就稍微�
         return additiveUtilitySpaceFactory.getUtilitySpace();
     }
 ```
+
+
+### 调用
+最后，你需要回到你的agent类，去调用类的实例。你的AgentXX 应该这样使用它：
+```java
+	public void init(NegotiationInfo info)   //参数初始化，获取在GUI获得的数据
+	{
+		super.init(info);   //用于收集所有的谈判参数
+		this.iaMap=new IaMap(userModel); //初始化对手模型。
+		GeneticAlgorithm geneticAlgorithm=new GeneticAlgorithm(userModel);//初始化自己的模型
+		this.predictAbstractSpace=geneticAlgorithm.geneticAlgorithm();
+		this.predictAdditiveSpace=(AdditiveUtilitySpace) predictAbstractSpace; //返回一个效用空间，这个累加效用空间，近似于当前的不确定效用空间
+		BidRanking bidRanking = userModel.getBidRanking();
+		this.maxBidForMe=bidRanking.getMaximalBid();  //先获得自己最高的bid用来迷惑对手
+		System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out))); //用于关闭所有打印输出
+	}
+```
+
+
+### 总结
+如果你认认真真的读过并且实现了我的代码，那么说明，你应该已经学会了遗传算法的思想。在此基础上，如果你能对crossover,fitness function有自己独到的见解和创新，那么你可能会表现的比我还要出色🍄。
+
+当然，希望你们能用好```AdditiveUtilitySpaceFactory```这个API，将它应用于更好的算法。比如我一直在想粒子群算法，模拟退火，蚁群算法能不能实现类似的功能。
+
+最后还是要提醒一下，不能直接抄我代码噢。Plagiarism在英国可是非常严重的一件事噢。Enrico已经说了，不能用以往的任何代码去实现你的Agent噢☠️。
+
+
+加下来我会继续更新关于Action以及如何写好report的一些经验。。。还是希望这些能够对你们有帮助的🦁。也欢迎大家能够和我交流，就当交个朋友🐮。
