@@ -351,12 +351,12 @@ public class GeneticAlgorithm {
         }                                             //但是，在listRank中，效用最低的值对应的index竟然是100。那说明，这个效用空间在第一个位置差了很大。
                                                         // 同理，如果listRank中的每一个键能正好接近或者等于它所在的索引数，那么说明这个效用空间分的就很对。
 
-//        6. 对数思想，需要的迭代次数最少
+        //6. 对数思想，需要的迭代次数最少
         double score=0.0f;
         double x=error/(Math.pow(listRank.size(), 3));
         double theta=-15*Math.log(x+0.00001f);  //利用对数思想   -15
         score=theta;
-        System.out.println(&quot;Error:&quot;+error);  7. 监控每次迭代的error的大小
+        System.out.println(&quot;Error:&quot;+error);  //7. 监控每次迭代的error的大小
 
         return score;  //8. 返回fitness score
 
