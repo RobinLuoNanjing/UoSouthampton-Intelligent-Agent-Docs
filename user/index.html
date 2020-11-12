@@ -92,6 +92,12 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#fitness">Fitness函数</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utilityspace">随机产生一个UtilitySpace</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_6">轮盘赌和精英选择</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">交叉和变异</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -204,7 +210,7 @@ import java.util.*;
 
 public class GeneticAlgorithm {
     private UserModel userModel;
-    private Random random=new Random();
+    private Random random=new Random(); //用于生成随机数
 
     private List&lt;AbstractUtilitySpace&gt; population=new ArrayList&lt;AbstractUtilitySpace&gt;();  //用于存放所有的累加效用空间population
     private int popSize=500;         //每一个population的总数
@@ -362,6 +368,75 @@ public class GeneticAlgorithm {
 
     }
 </code></pre>
+<h3 id="utilityspace">随机产生一个UtilitySpace</h3>
+<p>我们已经知道了种群中的个体是一个个<code>UtilitySpace</code>🙉,那我们如何创造他呢？这里就要说到一个🐂🍺的API,叫做<code>AdditiveUtilitySpaceFactory</code>，他可以帮助你<code>new</code>出一个新的<code>UtilitySpace</code>。因为这些<code>UtilitySpace</code>里的权重都是默认的，所以我们要随机的改变这些权重，确保种群的多样性。👻不然的话，你初始化的500个个体，都是一个模子打造出来的，那后代不也是一个模子吗？</p>
+<p>当然，<code>AdditiveUtilitySpaceFactory</code>不仅仅可以用在进化算法，还有诸如模拟退火，梯度下降，可能都需要这个API。</p>
+<pre><code class="language-java">    //产生一个随机的效用空间
+    private AbstractUtilitySpace getRandomChromosome(){
+        AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory=new AdditiveUtilitySpaceFactory(userModel.getDomain());  //直接获得当前utilitySpace下的domain.
+        List&lt;Issue&gt; issues=additiveUtilitySpaceFactory.getDomain().getIssues();
+        for(Issue issue:issues){
+            additiveUtilitySpaceFactory.setWeight(issue,random.nextDouble());    //设置每个issue的权重
+            IssueDiscrete values=(IssueDiscrete) issue;       //将issue强制转换为values集合
+            for (Value value:values.getValues()){            //通过values集合，获取每个value。
+                additiveUtilitySpaceFactory.setUtility(issue,(ValueDiscrete)value,random.nextDouble());   //因为现在是累加效用空间，随便设置一个权重之后，可以对当前这个value设置一个效用，效用随机。
+            }                                                                                            //当效用确定了之后，当前的value自己本身的值也就确定了。
+                                                                                                            //这里设置的效用是设置value的evaluation
+        }
+        additiveUtilitySpaceFactory.normalizeWeights(); //因为之前对每个value的效用值计算都是随机的，这个时候，需要归一化。
+        return  additiveUtilitySpaceFactory.getUtilitySpace();  //生成一个效用空间之后，返回这个效用空间。
+
+    }
+</code></pre>
+<h3 id="_6">轮盘赌和精英选择</h3>
+<p>这个算法其实没啥好说的，就是假设有2000个个体，我要根据轮盘赌去选择多少个获得交配权，多少个精英直接保留。从而产生下一代种群。</p>
+<pre><code class="language-java">    //select算法，基于轮盘赌算法和精英策略。
+    private List&lt;AbstractUtilitySpace&gt; select(List&lt;AbstractUtilitySpace&gt; population, List&lt;Double&gt; fitnessList, int popSize){
+        int eliteNumber=2;   //保留多少个精英
+        List&lt;AbstractUtilitySpace&gt; nextPopulation=new ArrayList&lt;&gt;();  //用来存放下一代
+
+
+        //这一步我们需要先复制fitnessList。。
+        List&lt;Double&gt; copyFitnessList=new ArrayList&lt;&gt;();
+        for(int i=0;i&lt;fitnessList.size();i++){
+            copyFitnessList.add(fitnessList.get(i));
+        }
+
+        //复制的好处，就是对copyFitnessList的修改不会影响，fitnessList
+        for(int i=0;i&lt;eliteNumber;i++){
+            double maxFitness=Collections.max(copyFitnessList);   //先选取最大的效用
+            int index=copyFitnessList.indexOf(maxFitness);        //根据最大的效用，选取最大效用的index
+            nextPopulation.add(population.get(index));        //将最大效用的效用空间存放在下一代
+
+            double temp=-1000.0;  //初始化的值得很小。。因为在fitness函数中真的有机会得到很小的负值
+            Double tempDouble=new Double(temp);
+            //这里需要注意，每次找到一个精英，就需要把这个精英的效用降低为-1，以便让第二次循环找到第二个最大值
+            copyFitnessList.set(index,tempDouble);
+        }
+
+        //先保存所有的fitness
+        double sumFitness=0.0;
+        for(int i=0;i&lt;eliteNumber;i++){
+            sumFitness+=fitnessList.get(i);
+        }
+
+        //轮盘赌算法
+        for(int i=0;i&lt;popSize-eliteNumber;i++){
+            double randNum=random.nextDouble()*sumFitness;
+            double sum=0.0;
+            for(int j=0;i&lt;population.size();j++){
+                sum+=fitnessList.get(i);
+                if(sum&gt;randNum){
+                    nextPopulation.add(population.get(j));
+                    break;
+                }
+            }
+        }
+
+        return nextPopulation;
+    }
+</code></pre>
+<h3 id="_7">交叉和变异</h3>
               
             </div>
           </div>
