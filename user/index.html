@@ -96,7 +96,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_6">轮盘赌和精英选择</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_7">交叉和变异</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">交叉</a>
     </li>
         </ul>
     </li>
@@ -436,7 +436,61 @@ public class GeneticAlgorithm {
         return nextPopulation;
     }
 </code></pre>
-<h3 id="_7">交叉和变异</h3>
+<h3 id="_7">交叉</h3>
+<p>交叉应该是最有意思的一个部分了🐔。你不仅可以知道两个<code>AbstractUtilitySpace</code>是如何嘿嘿嘿🚘的，同时也可以知道他们生出的孩子是什么样子的。</p>
+<pre><code class="language-java">    private AbstractUtilitySpace crossover(AdditiveUtilitySpace father,AdditiveUtilitySpace mother){
+        double wFather;
+        double wMother;
+        double wUnion;
+        double mutationStep=0.35;    //变异最大步长 0.35
+
+
+        AdditiveUtilitySpaceFactory additiveUtilitySpaceFactory=new AdditiveUtilitySpaceFactory(userModel.getDomain());
+        List&lt;IssueDiscrete&gt; issuesList=additiveUtilitySpaceFactory.getIssues();
+        for(IssueDiscrete i:issuesList){
+            wFather=father.getWeight(i);  //获取父亲的权重
+            wMother=mother.getWeight(i);  //获取母亲的权重
+
+            //这里判断哪个父母的基因最好了
+            wUnion=(wFather+wMother)/2;
+
+            if (Math.random()&gt;0.5){
+                double wChild=wUnion+mutationStep*Math.abs(wFather-wMother);
+                if (wChild &lt; 0.01) wChild = 0.01;
+                additiveUtilitySpaceFactory.setWeight(i,wChild);
+            }
+            else {
+                double wChild=wUnion-mutationStep*(Math.abs(wFather-wMother));
+                if (wChild &lt; 0.01) wChild = 0.01;
+                additiveUtilitySpaceFactory.setWeight(i,wChild);
+            }
+            //考虑变异情况
+            if(random.nextDouble()&lt;mutationRate) additiveUtilitySpaceFactory.setWeight(i,random.nextDouble());
+
+            for(ValueDiscrete v:i.getValues()){
+                wFather=((EvaluatorDiscrete)father.getEvaluator(i)).getDoubleValue(v);
+                wMother=((EvaluatorDiscrete)mother.getEvaluator(i)).getDoubleValue(v);
+                //这里判断哪个父母的基因最好了
+                wUnion=(wFather+wMother)/2;
+
+                if (Math.random()&gt;0.5){
+                    double wChild=wUnion+mutationStep*Math.abs(wFather-wMother);
+                    if (wChild &lt; 0.01) wChild = 0.01;
+                    additiveUtilitySpaceFactory.setUtility(i,v,wChild);
+                }
+                else {
+                    double wChild = wUnion - mutationStep * Math.abs(wFather - wMother);
+                    if (wChild &lt; 0.01) wChild = 0.01;
+                    additiveUtilitySpaceFactory.setUtility(i, v, wChild);
+                }
+                //考虑变异情况
+                if(random.nextDouble()&lt;mutationRate) additiveUtilitySpaceFactory.setUtility(i,v,random.nextDouble());
+            }
+        }
+        additiveUtilitySpaceFactory.normalizeWeights();
+        return additiveUtilitySpaceFactory.getUtilitySpace();
+    }
+</code></pre>
               
             </div>
           </div>

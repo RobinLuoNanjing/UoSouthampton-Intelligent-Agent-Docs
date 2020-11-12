@@ -282,10 +282,13 @@ public class IaMap extends HashMap&lt;Issue, List&lt;ValueNew&gt;&gt; {
         //现在才开始算每一个issue的权重
         for(Issue issue:lastOffer.getIssues()){
             double issueWeightUnnormalized=0; //存放每个issue的权重的临时变量
+            double maxWeightUnnormalized=0;
             for(ValueNew valueNew:this.get(issue)){
-                issueWeightUnnormalized+=valueNew.weightUnnormalized;
+                if(valueNew.weightUnnormalized&gt;maxWeightUnnormalized){
+                    maxWeightUnnormalized=valueNew.weightUnnormalized;
+                }
             }
-            double issueWeight=issueWeightUnnormalized/totalWeight;
+            double issueWeight=maxWeightUnnormalized/totalWeight;
             this.weightList.put(issue,issueWeight);
         }
 
