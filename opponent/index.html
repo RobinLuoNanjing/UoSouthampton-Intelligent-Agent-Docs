@@ -101,6 +101,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../user/">User Model (Lab4)</a>
                     </li>
                 </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../action/">Choose and Accept</a>
+                    </li>
+                </ul>
       </div>
     </div>
     </nav>
@@ -134,6 +138,7 @@
             <div class="section">
               
                 <h1 id="_1">知彼</h1>
+<p><img alt="cambridge" src="../img/opponent/cambridge.jpg" /></p>
 <p>在这一节内容里，终于迎来了最令人激动的环节：预测对手模型(predict the opponent model)🥳。你不仅会学到衡量一个offer的质量的评价标准(Quality Metrics)🙄，更能学到干货： Johny Black， 这个在Lab3中提到的预测对手模型的方法的实现细节😛，这肯定会帮助你少走弯路，并且节省很多时间😇。</p>
 <p>注意🐞：这一节也是大部分同学与这门课大作业脱钩的地方。因为涉及到自己实现预测对手模型，没有Java基础的童鞋很容易在Hashmap和面向对象编程这里畏缩，放弃，然后扔给一个同学来写。如果你们确实遇到这样的问题，可以参考我的实现方法。虽然我Java代码写的一般般。但是它是能跑的起来的噢。如果你能认真读一遍，理解一遍，我觉得你的收获会非常的大，你甚至可以理解到面向对象的妙处😎，这对你以后找工作也好，刷题也好，都能起到帮助。</p>
 <h2 id="quality-metrics">Quality Metrics</h2>
@@ -213,6 +218,8 @@ import java.util.Comparator;
 <div class="arithmatex">\[w_{1}=\frac{\frac{82}{100}}{\frac{82}{100}+\frac{38}{100}}=\frac{82}{120}\]</div>
 <p>为了实现这个过程，我们肯定是需要用到HashMap的。但是我不能直接去用它。为什么呢？因为对手的offer是不断的更新的，也就是说，对手出一次offer，你就得计算一次，出一次，计算一次🤨...如果你准备用HashMap去实现这个过程，将会复杂无比(for 循环很多，而且要不断的更新HashMap)。</p>
 <p>所以，我就新定义了一个类，叫<code>IaMap</code>。它是<code>HashMap</code>的儿子😬，所以继承<code>HashMap</code>的特性。不仅如此，它还能自我的更新与计算。</p>
+<p>注意！！！！！！经过了学弟们的提问(<a href="https://github.com/Ashero00">@Ashero00</a>和<a href="https://github.com/hsdjkfnsfc">@hsdjkfnsfc</a>,这里的User Model是需要你在Genius中开启不同domain下xml的preference uncertainty才可以用的，不然会有空指针报错。我建议你们看完lab3的时候，顺便把lab4也看一下，因为lab4需要用到新版本的Genius，而且如果你不看lab4你不知道preference uncertainty是什么意思。</p>
+<p><img alt="uncertainty" src="../img/opponent/uncertainty.jpg" /></p>
 <pre><code class="language-java">/**整个类就是一个HashMap**/
 public class IaMap extends HashMap&lt;Issue, List&lt;ValueNew&gt;&gt; {
 
