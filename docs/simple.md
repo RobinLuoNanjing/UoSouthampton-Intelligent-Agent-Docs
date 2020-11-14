@@ -1,4 +1,5 @@
 # 一个简单的Agent
+![dudu](img/simple/dudu.jpg)
 
 ## 理论名词解释
 

@@ -1,4 +1,6 @@
 # 知彼
+![cambridge](img/opponent/cambridge.jpg)
+
 在这一节内容里，终于迎来了最令人激动的环节：预测对手模型(predict the opponent model)🥳。你不仅会学到衡量一个offer的质量的评价标准(Quality Metrics)🙄，更能学到干货： Johny Black， 这个在Lab3中提到的预测对手模型的方法的实现细节😛，这肯定会帮助你少走弯路，并且节省很多时间😇。
 
 注意🐞：这一节也是大部分同学与这门课大作业脱钩的地方。因为涉及到自己实现预测对手模型，没有Java基础的童鞋很容易在Hashmap和面向对象编程这里畏缩，放弃，然后扔给一个同学来写。如果你们确实遇到这样的问题，可以参考我的实现方法。虽然我Java代码写的一般般。但是它是能跑的起来的噢。如果你能认真读一遍，理解一遍，我觉得你的收获会非常的大，你甚至可以理解到面向对象的妙处😎，这对你以后找工作也好，刷题也好，都能起到帮助。
@@ -69,6 +71,9 @@ Pareto Efficient Frontier，帕累托效用边界。在之前讲basic concept的
 为什么要那么麻烦继承一个```Comparator```呢🧐？实际上，回顾Johny Black论文中，里面是不是有个要求，是根据options出现的频数来排顺序？我现在的功能就是完成排顺序这个环节。现在你可能还看不出来这用处，但是到后面你就会理解啦。
 
 
+
+
+
 ```java
 import genius.core.issue.Value;
 import java.util.Comparator;
@@ -114,6 +119,11 @@ $$w_{1}=\frac{\frac{82}{100}}{\frac{82}{100}+\frac{38}{100}}=\frac{82}{120}$$
 为了实现这个过程，我们肯定是需要用到HashMap的。但是我不能直接去用它。为什么呢？因为对手的offer是不断的更新的，也就是说，对手出一次offer，你就得计算一次，出一次，计算一次🤨...如果你准备用HashMap去实现这个过程，将会复杂无比(for 循环很多，而且要不断的更新HashMap)。
 
 所以，我就新定义了一个类，叫```IaMap```。它是```HashMap```的儿子😬，所以继承```HashMap```的特性。不仅如此，它还能自我的更新与计算。
+
+
+注意！！！！！！经过了学弟们的提问([@Ashero00](https://github.com/Ashero00)和[@hsdjkfnsfc](https://github.com/hsdjkfnsfc),这里的User Model是需要你在Genius中开启不同domain下xml的preference uncertainty才可以用的，不然会有空指针报错。我建议你们看完lab3的时候，顺便把lab4也看一下，因为lab4需要用到新版本的Genius，而且如果你不看lab4你不知道preference uncertainty是什么意思。
+
+![uncertainty](img/opponent/uncertainty.jpg)
 
 ```java
 /**整个类就是一个HashMap**/
@@ -259,6 +269,8 @@ IaMap的构造函数(不懂构造函数的同学，可以理解为实例化一�
 这一章节是不是很刺激。我觉得肯定有人会认真读完我上面写的内容。希望能对你有所帮助。也希望你能有更好的代码结构来实现Johny Black🥊。
 
 当然，我知道很多人忙着读FAI的论文，写FML的lab，没时间去静下心来看这些。这些代码也算是能给你们分担一点压力好了🍺。
+
+
 
 
 

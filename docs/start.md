@@ -1,4 +1,5 @@
 # 安装和配置Genius
+![porthwood](img/start/Porthwood.jpg)
 默认你们很多人之前没有java基础，所以这里会写的比较详细一点。希望科班出身的童鞋能够照顾一下身边没有java基础的童鞋哈🧐。如果嫌文字比较长，你们可以看视频去完成，这个视频是你们🖥Lab2中会提到的视频，是一个提前录制好的 [视频链接](https://www.youtube.com/watch?v=ES_bpdRiSNM)。
 
 另外，下面的内容可能与你们🖥Lab1 Task2: A first look at Genius 有重叠之处，如果你们的Genius环境已经配置好了，就可以跳过这一段啦。
