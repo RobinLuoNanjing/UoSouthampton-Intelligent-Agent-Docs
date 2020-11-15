@@ -8,6 +8,8 @@ nav:
     - Opponent Model (Lab3): opponent.md
     - User Model (Lab4): user.md
     - Choose and Accept: action.md
+    - Submission and Report: report.md
+    - Monologue: final.md
 
 theme: readthedocs
 
