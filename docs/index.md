@@ -108,49 +108,7 @@ Hello, Southampton大学的AI同学你们好哈😊。我知道你们都要学�
 ## About us
 Aloha,😊。该学习指南的作者现在只有两个人哈。也欢迎那些愿意将自己当初做的agent的经历经验分享给下一届的同学们哈。如果你对这份学习指南比较满意，希望可以star或者follow我们。这会是我们继续完善这份指南的动力。当然，也很乐意通过这样的方式认识大家。毕竟互联网圈人脉广阔，以后跳槽也方便哈。
 
-<div style="height: 200px;">
-<span style="width: 30%;height:30%;float:left">  
-    <img src="https://avatars1.githubusercontent.com/u/28834567?s=400&u=2e522f94f4e0ad980cececa0593be0f0e2c2dcb2&v=4" alt="Robin" width="80%" style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);">
-</span>
 
-<span style="float: left;width: 50%">
- <h3 style="font-family: 'Apple Braille'">Robin Luo</h3>
- 
- <p stpyle="color: #666666;font-family: 'Apple LiSung'">2019 AI MSc at the Uni of Southampton
- </p>
- 
- <p>
-  <a href="https://github.com/RobinLuoNanjing">
-    <img src="img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
-  </a>
-   <a href="https://www.linkedin.com/in/mingmingluo/">
-      <img src="img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
-   </a>
- </p>
-</span>
-</div>
-
-<div style="height: 200px">
-<span style="width: 30%;height:30%;float:left">  
-    <img src="https://avatars3.githubusercontent.com/u/20392429?s=400&u=a6a630ee43e19efe5234fff256e31aec8c922bd1&v=4" alt="Peihao" width="80%" style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);">
-</span>
-
-<span style="float: left;width: 50%">
- <h3 style="font-family: 'Apple Braille'">Peihao</h3>
- 
- <p stpyle="color: #666666;font-family: 'Apple LiSung'">2018 AI MSc at the Uni of Southampton
- </p>
- 
- <p>
-  <a href="https://github.com/renph">
-    <img src="img/site/github.png" alt="github" width="10%" style="float: left;margin: 10px">
-  </a>
-   <a href="https://www.linkedin.com/in/peihao-ren/">
-      <img src="img/site/linkedin-icon.svg" alt="linkedin" width="10%" style="float: left;margin: 10px">
-   </a>
- </p>
-</span>
-</div>
 
 
 
