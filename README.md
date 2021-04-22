@@ -4,6 +4,8 @@ Docs文档可以在这里看到 [点击这里](https://robinluonanjing.github.io
 
 `pip install -r requirements.txt`
 
+当然啦，如果你想获得一些AI其它课程的复习经验，可以关注我的这个Project: [AI Southampton Exam Guide](https://github.com/RobinLuoNanjing/AI_Southampton_Exam_Guide)
+
 
 # Welcome to Intelligent Agent world
 Hello, Southampton大学的AI同学你们好哈😊。我知道你们都要学习Intelligent Agent这门必修课的(🤦‍♂️可能有些cs系的学生也选了这门课哈，希望你们能退则退吧)。
